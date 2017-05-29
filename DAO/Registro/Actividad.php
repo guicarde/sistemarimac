@@ -154,6 +154,24 @@ function setObligatoria($obligatoria) {
             return null;
         }
     }
+	         function listar_india(){
+       
+        $con = Conectar();
+        $sql = "SELECT * FROM schedule_india_prueba()";
+        $res = pg_query($con,$sql);
+        $array=null;
+        while($fila = pg_fetch_assoc($res))
+        {
+                   $array[] = $fila;
+        }
+       
+        if(count($array)!=0){
+            return $array; 
+        }
+        else{
+            return null;
+        }
+    }
          function dias_por_actividad(Actividad $a){
        
         $con = Conectar();
