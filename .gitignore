@@ -1,1 +1,16 @@
-launchConfigurations/
+binaries/lucid/*
+!binaries/lucid/index*.json
+binaries/precise/*
+!binaries/precise/index*.json
+binaries/trusty/*
+!binaries/trusty/index*.json
+*.pyc
+*.swp
+/env
+*_buildpack*.zip
+/log/
+vendor
+!/vendor
+*.DS_Store
+.bundle
+DebugKit

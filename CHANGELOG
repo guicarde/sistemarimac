@@ -1,0 +1,917 @@
+v4.3.33 May 08, 2017
+=====================
+
+* Enhance GeoIP extension
+  (https://www.pivotaltracker.com/story/show/141942891)
+  (https://www.pivotaltracker.com/story/show/141942891)
+
+* Add dynatrace extension
+  (https://www.pivotaltracker.com/story/show/144465373)
+
+* Rebuild all php versions for new modules
+  (https://www.pivotaltracker.com/story/show/144601633)
+
+v4.3.32 May 01, 2017
+=====================
+
+* Allow more flexible PHP configuration
+  - .ini files in .bp-config/php/php.ini.d will be added to the config using PHP_INI_SCAN_DIR
+  - .conf files in .bp-config/php/fpm.d will be included in php-fpm.conf
+  - Add warning that PHP_EXTENSIONS in options.json is deprecated
+  (https://www.pivotaltracker.com/story/show/141979329)
+
+* Add nginx 1.13.0
+  (https://www.pivotaltracker.com/story/show/144290507)
+
+* Fix private ip space to be in accordance with best practices
+  (https://www.pivotaltracker.com/story/show/143949555)
+
+* Re-add nginx 1.10.x line to manifest.yml
+  (https://www.pivotaltracker.com/story/show/143590265)
+
+v4.3.31 Apr 18, 2017
+=====================
+
+* Add PHP 7.1.4 + 7.0.18, remove PHP 7.1.2 + 7.0.16
+  (https://www.pivotaltracker.com/story/show/143513693)
+  (https://www.pivotaltracker.com/story/show/143488233)
+
+* Add nginx 1.12.0, remove nginx 1.10.3
+  (https://www.pivotaltracker.com/story/show/143590265)
+
+* Add igbinary to PHP7 modules
+  (https://www.pivotaltracker.com/story/show/142891967)
+
+* Rebuild all php versions for new modules
+  (https://www.pivotaltracker.com/story/show/142891967)
+
+* Add nginx 1.11.13, remove nginx 1.11.12
+  (https://www.pivotaltracker.com/story/show/143052671)
+
+v4.3.30 Mar 27, 2017
+=====================
+
+* Add nginx 1.11.12, remove nginx 1.11.10
+  (https://www.pivotaltracker.com/story/show/142401589)
+
+* Add support for supply buildpacks
+  (https://www.pivotaltracker.com/story/show/141616657)
+
+* Disable `opcache.validate_timestamps` by default.
+  (https://www.pivotaltracker.com/story/show/141889325)
+
+v4.3.29 Mar 15, 2017
+=====================
+
+* Remove spurious 'extension is not provided' warning for extensions
+  compiled into PHP when case doesn't match
+
+  (https://www.pivotaltracker.com/story/show/140845631)
+
+* Add PHP 7.1.3, remove PHP 7.1.1
+  (https://www.pivotaltracker.com/story/show/141690141)
+
+* Add PHP 7.0.17, remove PHP 7.0.15
+  (https://www.pivotaltracker.com/story/show/141681989)
+
+* Add composer 1.4.1, remove composer 1.3.2
+  (https://www.pivotaltracker.com/story/show/141476165)
+  (https://www.pivotaltracker.com/story/show/141348573)
+  (https://www.pivotaltracker.com/story/show/141298707)
+
+* Rebuild all PHP versions for updated modules
+  (https://www.pivotaltracker.com/story/show/140832127)
+
+* Log warning if PHP version specified is invalid
+  - PHP versions can be specified in either the options.json or the
+  composer.json
+  (https://www.pivotaltracker.com/story/show/128186261)
+
+* Use semver when parsing version from composer.json
+  - replace '>=' with '~>' to maintain backwards compatibility
+  (https://www.pivotaltracker.com/story/show/140517213)
+
+v4.3.28 Feb 27, 2017
+=====================
+
+* Add geoip PECL extension 
+  (https://www.pivotaltracker.com/story/show/138843171)
+
+* Ensure buildpack does not warn about extensions that are compiled into PHP 
+  (https://www.pivotaltracker.com/story/show/138757115)
+
+* Add nginx 1.11.10, remove nginx 1.11.9
+  (https://www.pivotaltracker.com/story/show/139833155)
+
+* Add PHP 7.0.16, remove PHP 7.0.14
+  (https://www.pivotaltracker.com/story/show/139822511)
+
+* Add PHP 7.1.2, remove PHP 7.1.0
+  (https://www.pivotaltracker.com/story/show/139859257)
+
+* Remove PHP 5.5.x version line
+  (https://www.pivotaltracker.com/story/show/137306075)
+
+v4.3.27 Feb 09, 2017
+=====================
+
+* Fix bug where apps with an existing "logs" directory fail to stage
+  (https://www.pivotaltracker.com/story/show/137171925)
+
+* Add nginx 1.10.3, remove nginx 1.10.2
+  (https://www.pivotaltracker.com/story/show/138721731)
+
+* Add EOL dates for php, newrelic and nginx
+  (https://www.pivotaltracker.com/story/show/137374307)
+
+* Ensure 'RequestHeader unset Proxy early' httpd.conf directive succeeds
+  (https://www.pivotaltracker.com/story/show/138754907)
+
+* Add composer 1.3.2, remove composer 1.3.1
+  (https://www.pivotaltracker.com/story/show/138520117)
+
+* Add nginx 1.11.9, remove nginx 1.11.8
+  (https://www.pivotaltracker.com/story/show/138243621)
+
+v4.3.26 Jan 24, 2017
+=====================
+
+* Update PHP Module Dependencies
+  - apcu
+  - igbinary
+  - imagick
+  - ioncube
+  - mailparse
+  - mongodb
+  - phalcon
+  - phpiredis
+  - redis
+  (https://www.pivotaltracker.com/story/show/137552097)
+
+* Add PHP 5.6.30, Remove PHP 5.6.28
+  (https://www.pivotaltracker.com/story/show/137934291)
+
+* Add PHP 7.0.15, Remove PHP 7.0.13
+  (https://www.pivotaltracker.com/story/show/137780233)
+
+* Add PHP 7.1.0 and PHP 7.1.1
+  (https://www.pivotaltracker.com/story/show/135296909)
+  (https://www.pivotaltracker.com/story/show/137815105)
+
+* Add composer 1.3.1, remove composer 1.3.0
+  (https://www.pivotaltracker.com/story/show/137215237)
+
+v4.3.25 Jan 09, 2017
+=====================
+
+* Add warning if downloaded dependency is not the latest patch version for a
+given major and minor version
+  (https://www.pivotaltracker.com/story/show/134863437)
+
+* Add new version warning to PHP buildpack
+  (https://www.pivotaltracker.com/story/show/135234395)
+
+* Add composer 1.3.0, remove composer 1.2.4
+  (https://www.pivotaltracker.com/story/show/136634433)
+
+* Add nginx 1.11.8, remove nginx 1.11.7
+  (https://www.pivotaltracker.com/story/show/136691285)
+
+* Add httpd 2.4.25, remove httpd 2.4.23
+  (https://www.pivotaltracker.com/story/show/136274575)
+
+v4.3.24 Dec 15, 2016
+=====================
+
+* Add PHP 7.0.14, remove PHP 7.0.12
+  (https://www.pivotaltracker.com/story/show/135633579)
+
+* Add PHP 5.6.29, remove PHP 5.6.27
+  (https://www.pivotaltracker.com/story/show/135758907)
+
+* Add nginx 1.11.7, remove nginx 1.11.6
+  (https://www.pivotaltracker.com/story/show/136041771)
+
+* Use rebuilt HTTPD 2.4.23 with proper LDAP support
+  (https://www.pivotaltracker.com/story/show/132910743)
+
+* Add composer 1.2.4, remove composer 1.2.2
+  (https://www.pivotaltracker.com/story/show/135654195)
+
+v4.3.23 Dec 01, 2016
+=====================
+
+* Add rdkafka support for PHP5
+  (https://www.pivotaltracker.com/story/show/134085181)
+
+* Add ioncube support to PHP7
+  (https://www.pivotaltracker.com/story/show/134086493)
+
+* Add nginx 1.11.6, remove nginx 1.11.5
+  (https://www.pivotaltracker.com/story/show/134361411)
+
+* Add php 5.6.28, remove php 5.6.26
+  (https://www.pivotaltracker.com/story/show/133979927)
+
+* Add php 7.0.13, remove php 7.0.11
+  (https://www.pivotaltracker.com/story/show/133933579)
+
+* Update versions for PHP7 modules librdkafka and cassandra
+  (https://www.pivotaltracker.com/story/show/133503813)
+
+* Rebuild and change path for php, nginx, httpd, composer binaries
+  - We identified a potential, but unlikely, attack vector in our continuous
+    integration system. Our own auditing strongly suggests that this attack
+    vector was not taken advantage of. However, out of an abundance of caution,
+    we are rebuilding all buildpack dependencies that we maintain.
+
+v4.3.22 Nov 09, 2016
+=====================
+
+* Ensure all downloaded binaries have checksums verified
+  (https://www.pivotaltracker.com/story/show/128099189)
+
+* Add composer 1.2.2, remove composer 1.2.1
+  (https://www.pivotaltracker.com/story/show/133687415)
+
+* Add APCu support to all PHP versions
+  (https://www.pivotaltracker.com/story/show/129370967)
+
+* Warn and error when composer.json or composer.lock has invalid format
+  (https://www.pivotaltracker.com/story/show/130240985)
+
+* Add support for phpiredis and phpredis in PHP7
+  (https://www.pivotaltracker.com/story/show/127939547)
+
+v4.3.21 Oct 19, 2016
+=====================
+
+* Address USN-3095-1 and associated CVEs with PHP 5.6.27 and 7.0.12
+
+* Add support for rdkafka in PHP 7
+  (https://www.pivotaltracker.com/story/show/131556091)
+
+* Add php 5.6.26 and 5.6.27, remove php 5.6.24 and 5.6.25
+  (https://www.pivotaltracker.com/story/show/130436939)
+  (https://www.pivotaltracker.com/story/show/132217765)
+
+* Add php 7.0.11 and 7.0.12, remove php 7.0.9 and 7.0.10
+  (https://www.pivotaltracker.com/story/show/130313627)
+  (https://www.pivotaltracker.com/story/show/132227519)
+
+* Add nginx 1.11.5, remove nginx 1.11.4
+  (https://www.pivotaltracker.com/story/show/132088805)
+
+* Add nginx 1.10.2, remove nginx 1.10.1
+  (https://www.pivotaltracker.com/story/show/132678745)
+
+v4.3.20 Sep 19, 2016
+=====================
+
+* Enable mssql and pdo-dblib support for PHP
+  (https://www.pivotaltracker.com/story/show/129905147)
+
+* Update versions for PHP modules cassandra, xdebug, yaf, twig, php-protobuf
+  (https://www.pivotaltracker.com/story/show/129892237)
+
+* Add nginx 1.11.4, remove nginx 1.11.3
+  (https://www.pivotaltracker.com/story/show/130296431)
+
+* Add composer 1.2.1, remove composer 1.2.0
+  (https://www.pivotaltracker.com/story/show/130184859)
+
+* Print HTTPD version in staging logs
+  (https://www.pivotaltracker.com/story/show/128914955)
+
+v4.3.19 Sep 01, 2016
+=====================
+
+* Add phalcon support to php7
+  (https://www.pivotaltracker.com/story/show/128835133)
+
+* Fix ioncube for php5 and php7
+  (https://www.pivotaltracker.com/story/show/128040077)
+
+* Add PHP 7.0.10, remove PHP 7.0.8
+  (https://www.pivotaltracker.com/story/show/128529317)
+
+* Add PHP 5.6.25, remove PHP 5.6.23
+  (https://www.pivotaltracker.com/story/show/128571277)
+
+v4.3.18 Aug 18, 2016
+=====================
+
+* Redact credentials from HTTP(S) URLs in staging output and filenames
+  (https://www.pivotaltracker.com/story/show/126514693)
+
+* Introduce `default_versions` support
+  (https://www.pivotaltracker.com/story/show/126394949)
+
+* Add Cassandra pecl 1.2.1
+  (https://www.pivotaltracker.com/story/show/126683747)
+
+* Add nginx 1.11.3, remove nginx 1.11.2
+  (https://www.pivotaltracker.com/story/show/127085963)
+
+* Add PHP 5.5.38, 5.6.24, 7.0.9, remove PHP 5.5.36, 5.6.22, 7.0.7
+  (https://www.pivotaltracker.com/story/show/126760065)
+  (https://www.pivotaltracker.com/story/show/126680137)
+  (https://www.pivotaltracker.com/story/show/126629957)
+
+* Update modules
+  - Add imagick pecl 3.4.2, remove 3.4.1 (PHP5 + PHP7)
+  - Add redis pecl package: 2.2.8, remove 2.2.7 (PHP5)
+  - Add mongodb pecl package: 1.1.8, remove 1.1.6 (PHP5 + PHP7)
+  - Add lua pecl package: 2.0.2, remove 2.0.1 (PHP7)
+  - Add twig pecl package: 1.24.1, remove 1.24.0 (PHP5)
+  - Add rabbitmq-c 0.8.0, remove 0.7.1 (PHP5 + PHP7)
+  - Add php-protobuf 0.11.0, remove locked sha (d792f5b8e0) (PHP5)
+  (https://www.pivotaltracker.com/story/show/127621593)
+
+v4.3.17 Jul 20, 2016
+=====================
+
+  * Mitigations for httpoxy (CVE-2016-5387 and CVE-2016-5385)
+    - Unset proxy header for requests for Apache
+    - Clear out HTTP_PROXY value for nginx (no CVE assigned at this time)
+  (https://www.pivotaltracker.com/story/show/126591847)
+
+  * Update composer to 1.2.0
+    (https://www.pivotaltracker.com/story/show/126559299)
+
+  * Add httpd 2.4.23, remove httpd 2.4.20
+    (https://www.pivotaltracker.com/story/show/123892721)
+
+v4.3.16 Jul 15, 2016
+=====================
+
+* Make buildpacks.cloudfoundry.org the default url for buildpack
+  dependencies
+  (https://www.pivotaltracker.com/story/show/121757949)
+
+* Remove nginx 1.9.5, make nginx 1.11.x default version.
+  - Add nginx 1.10.1
+  - Add nginx 1.11.2
+  (https://www.pivotaltracker.com/story/show/124860331)
+  (https://www.pivotaltracker.com/story/show/124182441)
+
+* Rebuild php5 to include gearman
+  (https://www.pivotaltracker.com/story/show/121741961)
+
+* Update Phalcon from 2.0.11 -> 2.0.13
+  (https://www.pivotaltracker.com/story/show/125254211)
+
+* Update yaf to 3.0.3 in php7
+  (https://www.pivotaltracker.com/story/show/124082861)
+
+* Add pecl-mongodb to php5
+  - This leaves mongodb on php7 unchanged, and leaves `mongo` on php5
+  (https://www.pivotaltracker.com/story/show/119012029)
+
+v4.3.15 Jun 28, 2016
+=====================
+
+* Add php 5.5.37, remove php 5.5.35
+  (https://www.pivotaltracker.com/story/show/121937065)
+
+* Add php 5.6.23, remove php 5.6.21
+  (https://www.pivotaltracker.com/story/show/122010587)
+
+* Add php 7.0.8, remove php 7.0.6
+  (https://www.pivotaltracker.com/story/show/121990101)
+
+* Add composer 1.1.3, remove composer 1.1.2
+  (https://www.pivotaltracker.com/story/show/122332581)
+
+* populate-modules-in-manifest always updates modules
+  - Also sort modules alphabetically
+  (https://www.pivotaltracker.com/story/show/121973229)
+
+* Include solr in PHP binaries
+  (https://www.pivotaltracker.com/story/show/121045501)
+
+v4.3.14 Jun 02, 2016
+=====================
+
+* Add PHP 5.6.22 removing PHP 5.6.20
+  (https://www.pivotaltracker.com/story/show/120335617)
+
+* Adding nginx 1.11.1, remove 1.8. Make 1.11.1 the default.
+  (https://www.pivotaltracker.com/story/show/120614839)
+  (https://www.pivotaltracker.com/story/show/120624623)
+
+* Updating New Relic extension from v4.23.3.111 to v6.3.0.161
+  (https://www.pivotaltracker.com/story/show/119709645)
+
+* Update composer to 1.1.2
+  (https://www.pivotaltracker.com/story/show/120635735)
+
+v4.3.13 May 31, 2016
+=====================
+
+* Add php 5.5.36 and 7.0.7, remove php 5.5.34 and 7.0.5.
+  This addresses CVE-2013-7456 and CVE-2016-5093.
+  (https://www.pivotaltracker.com/story/show/120276393)
+  (https://www.pivotaltracker.com/story/show/120267503)
+
+* Update composer to 1.1.1
+  (https://www.pivotaltracker.com/story/show/119721701)
+
+* Update php modules for php5 and php7 versions
+  (https://www.pivotaltracker.com/story/show/119177589)
+  - php5:
+    - phalcon: 1.3.4 -> 2.0.11
+
+  - php7:
+    - Add amqp 1.7.0
+    - Add rabbitmq 0.7.1
+
+
+v4.3.12 May 05, 2016
+=====================
+
+* Add php 5.5.35, 5.6.21, 7.0.6 Remove php 5.5.33, 5.6.18, 7.0.4
+  (https://www.pivotaltracker.com/story/show/118464637)
+  (https://www.pivotaltracker.com/story/show/118484505)
+  (https://www.pivotaltracker.com/story/show/118532177)
+
+* Bumped php5 and php7 extensions:
+  (https://www.pivotaltracker.com/story/show/118792821)
+  - common:
+    - librabbitmq: 0.5.2 -> 0.7.1
+    - libhiredis: 0.11.0 -> 0.13.3
+    - liblua: 5.2.4 -> 5.3.2
+  - php5:
+    - imagick: 3.1.2 -> 3.4.1
+    - mongo: 1.6.5 -> 1.6.14
+    - msgpack: 0.5.5 -> 0.5.7
+    - xdebug: 2.3.1 -> 2.4.0
+    - yaf: 2.3.3 -> 2.3.5
+    - amqp: 1.4.0 -> 1.7.0
+    - suhosin: 0.9.37.1 -> 0.9.38
+    - twig: 1.18.0 -> 1.24.0
+  - php7:
+    - mongodb: 1.1.2 -> 1.1.6
+    - msgpack: 2.0.0 -> 2.0.1
+    - lua: 2.0.0 -> 2.0.1
+
+* Compile libmemcached with SASL support and enable memcache session support
+  (https://www.pivotaltracker.com/story/show/117829871)
+
+v4.3.11 Apr 26, 2016
+=====================
+
+* Add nginx 1.9.15, remove nginx 1.9.14
+  (https://www.pivotaltracker.com/story/show/117934027)
+
+* Add composer 1.0.2, remove composer 1.0.0
+  (https://www.pivotaltracker.com/story/show/118089459)
+
+* Enable compression by default for httpd
+  (https://www.pivotaltracker.com/story/show/116542487)
+
+v4.3.10 Apr 12, 2016
+=====================
+
+* Added extension to configure redis as a persistent store for PHP sessions
+  (https://www.pivotaltracker.com/story/show/117232921)
+
+* Add httpd 2.4.20, remove httpd 2.4.18
+  (https://www.pivotaltracker.com/story/show/116903551)
+
+* BUGFIX: detect composer.json non-recursively
+  (https://www.pivotaltracker.com/story/show/116521177)
+
+v4.3.9 Apr 07, 2016
+====================
+
+* Update php 7.0.4 and add 7.0.5 with new recompiled PHP binaries that include
+  the xdebug and imagick extensions
+  (https://www.pivotaltracker.com/story/show/116842725)
+
+* Add composer 1.0.0, remove composer 1.0.0-beta2
+  (https://www.pivotaltracker.com/story/show/116972309)
+
+* Add nginx 1.9.14, remove nginx 1.9.12
+  (https://www.pivotaltracker.com/story/show/116842725)
+
+* Add PHP 5.6.20, 5.5.34, 7.0.5, remove PHP 5.6.18, 5.5.32, 7.0.3
+  (https://www.pivotaltracker.com/story/show/116662205)
+
+* Add helpful error message and early exit when user specifies an invalid
+  webserver
+  (https://www.pivotaltracker.com/story/show/116450447)
+
+v4.3.8 Mar 29, 2016
+====================
+
+* Updates composer version from 1.0.0-beta1 to 1.0.0-beta2
+  (https://www.pivotaltracker.com/story/show/116416425)
+
+v4.3.7 Mar 15, 2016
+====================
+
+* Updates composer version from 1.0.0-alpha11 to 1.0.0-beta1
+  (https://www.pivotaltracker.com/story/show/115175869)
+
+v4.3.6 Mar 08, 2016
+====================
+
+* Adding pull request template
+
+* Add php 7.0.4, 5.5.33, and 5.6.19, remove 5.5.31 and 5.6.17
+  (https://www.pivotaltracker.com/story/show/115120557)
+
+* Bump nginx to version 1.9.12
+  (https://www.pivotaltracker.com/story/show/114349789)
+
+v4.3.5 Feb 16, 2016
+====================
+
+* Remove HHVM from PHP Buildpack
+  (https://www.pivotaltracker.com/story/show/113172267)
+
+* Moving intl from pecl package to compile-time option
+  (https://www.pivotaltracker.com/story/show/109840204)
+
+* Add composer-1.0.0-alpha11
+  (https://www.pivotaltracker.com/story/show/112362115)
+
+* add php 5.5.32, 5.6.18, 7.0.3, drop 5.5.30, 5.6.16
+  (https://www.pivotaltracker.com/story/show/112908255)
+
+v4.3.4 Jan 28, 2016
+====================
+
+* Add nginx 1.8.1 and 1.9.10, drop nginx 1.8.0 and 1.9.9
+  (https://www.pivotaltracker.com/story/show/112525507)
+
+v4.3.3 Jan 26, 2016
+====================
+
+* Show warning when composer.json and options.json both exist, to prevent conflicts
+  (https://www.pivotaltracker.com/story/show/111962349)
+
+* Make version 1.9.9 the default nginx version
+  (https://www.pivotaltracker.com/story/show/110700942)
+
+* Add versions 5.5.31, 5.6.17.
+  (https://www.pivotaltracker.com/story/show/111532430)
+
+* Remove versions 5.5.29, 5.6.15.
+  (https://www.pivotaltracker.com/story/show/111532430)
+
+v4.3.2 Dec 28, 2015
+====================
+
+* Add nginx 1.9.9, drop nginx 1.9.7
+  (https://www.pivotaltracker.com/story/show/110627098)
+
+* Add httpd 2.4.18, drop httpd 2.4.17
+  (https://www.pivotaltracker.com/story/show/110627098)
+
+v4.3.1 Dec 09, 2015
+====================
+
+* Adding support for PHP 5.6.16, remove support for PHP 5.6.14
+  (https://www.pivotaltracker.com/story/show/109359270)
+
+* Add support for nginx 1.9.7, remove support for nginx 1.9.6
+  (https://www.pivotaltracker.com/story/show/108351198)
+
+
+v4.3.0 Nov 16, 2015
+====================
+
+* Change default Apache retry value in httpd-php.conf to avoid
+  cached HTTP 503.
+  (https://www.pivotaltracker.com/story/show/103840940)
+
+* Drop support for nginx 1.6.3
+  (https://www.pivotaltracker.com/story/show/105344328)
+
+
+v4.2.1 Nov 06, 2015
+====================
+
+* Add support for nginx 1.9.6, drop support for nginx 1.9.5.
+  (https://www.pivotaltracker.com/story/show/106840684)
+
+* Add support for PHP 5.6.16, drop support for PHP 5.6.13.
+  (https://www.pivotaltracker.com/story/show/106944148)
+
+
+v4.2.0 Oct 20, 2015
+====================
+
+* Drop support for PHP 5.4. Please note PHP 5.4 has reached "End Of Life" on
+2015-09-14.
+  (https://www.pivotaltracker.com/story/show/105514114)
+
+* Update httpd to 2.4.17, drop 2.4.16
+  (https://www.pivotaltracker.com/story/show/105332752)
+
+
+v4.1.5 Oct 09, 2015
+====================
+
+* Update nginx to 1.9.5, drop 1.9.4
+  (https://www.pivotaltracker.com/story/show/103916116)
+
+* Add PHP 5.6.14 and 5.5.30, drop 5.6.12 and 5.5.28
+  (https://www.pivotaltracker.com/story/show/104524088)
+
+v4.1.4 Sep 18, 2015
+====================
+
+* update binaries for ICU vulnerabilities:
+  USN-2740-1, CVE-2015-1270, CVE-2015-2632, CVE-2015-4760
+  this commit removes libicu from the buildpack, and instead relies
+  upon the libraries delivered by the rootfs (note that rootfs 1.9.0
+  addresses this vulnerability).
+  (https://www.pivotaltracker.com/story/show/103531876)
+
+v4.1.3 Sep 14, 2015
+====================
+Please note that PHP 5.4 will reach "End of Life" on 2015-09-14. We intend to remove support for this version of PHP on or before 2015-10-16.
+
+* Updating PHP binaries for redis 2.2.7
+  (https://www.pivotaltracker.com/story/show/100925176)
+
+* Add support for PHP 5.4.45, 5.5.29, 5.6.13
+
+* Remove support for PHP 4.4.43, 5.5.27, 5.6.11
+  (https://www.pivotaltracker.com/story/show/102517700)
+
+* Upgrade nginx to 1.9.4
+
+
+
+v4.1.2 Aug 31, 2015
+====================
+
+Note that 4.1.0 and 4.1.1 were not released.
+
+* Introduce *non-backwards* compatible change to composer detection.
+  The buildpack will now, by default, detect composer files in the root directory of
+  a php application or a configured `WEBDIR` directory. For the buildpack to detect
+  composer files in another directory, one must explicitly set this directory via the
+  `COMPOSER_PATH` environment variable. For more information please refer to the
+  documentation here: http://docs.cloudfoundry.org/buildpacks/php/gsg-php-composer.html
+  (https://www.pivotaltracker.com/story/show/99170278)
+
+* Remove application developer's ability to override the buildpack's
+  binaries via DOWNLOAD_URL option.
+  (https://www.pivotaltracker.com/story/show/101243110)
+
+* Remove default php startup warnings in the event of unsupported extensions
+  within an application. The warnings have been replaced with a more explicit
+  'unsupported extension' message printed to standard error.
+  (https://www.pivotaltracker.com/story/show/100180478)
+
+* Add support for PHP versions: 5.6.12, 5.5.28, and 5.4.44.
+  Remove support for PHP versions: 5.6.10, 5.5.26, and 5.4.42.
+  Update all bundled PHPs with readline-ext built as a shared module.
+  (https://www.pivotaltracker.com/story/show/101121820)
+  (https://www.pivotaltracker.com/story/show/99436586)
+
+* Correct logging of downloaded resource sources
+  (https://www.pivotaltracker.com/story/show/100516510)
+
+* Document support for protobuf extension
+  (https://www.pivotaltracker.com/story/show/100244194)
+
+* `bin/detect` emits the buildpack version
+  (https://www.pivotaltracker.com/story/show/100757820)
+
+* Update Nginx binary to 1.9.3,
+  Apache HTTPD to 2.4.16,
+  NewRrelic to 4.23.3.111
+  (https://www.pivotaltracker.com/story/show/99507244)
+
+* PHP Updates for libsnmp vulnerability
+  (https://www.pivotaltracker.com/story/show/102276186)
+
+
+v4.0.0 Jul 20, 2015
+====================
+
+* upgrade PHP 5.6.11, 5.5.27, and 5.4.43
+  (https://www.pivotaltracker.com/story/show/98855368)
+
+* Package all PHP modules in a single tarball
+
+  Instead of downloading PHP modules individually, include all modules in a
+  single tarball to make the manifest more manageable.
+  (https://www.pivotaltracker.com/story/show/95473520)
+
+* Package all httpd modules in a single tarball
+
+  Instead of downloading httpd modules individually, include all modules
+  in a single tarball to make the manifest more manageable.
+  (https://www.pivotaltracker.com/story/show/95473520)
+
+* Add nginx 1.9.2, upgrade to 1.6.3; drop 1.7.x
+  (https://www.pivotaltracker.com/story/show/98855608)
+
+* Include current stack in unsupported stack message
+  (https://www.pivotaltracker.com/story/show/98579464)
+
+v3.3.1 Jul 08, 2015
+====================
+
+* Include php versions 5.6.10, 5.5.26, 5.4.42
+  Remove support for 5.4.39, 5.5.23, 5.6.7
+  Change the default PHP version to 5.5.26
+  (https://www.pivotaltracker.com/story/show/98547428)
+
+* Support nginx 1.8
+  (https://www.pivotaltracker.com/story/show/96911902)
+
+* Fix boolean values in options.json
+  (https://www.pivotaltracker.com/story/show/98199628)
+
+v3.3.0 Jun 24, 2015
+====================
+
+* Fail with helpful error message for incompatible stack
+  (https://www.pivotaltracker.com/story/show/96590154)
+
+* Remove lucid-specific binaries from manifest.yml
+  (https://www.pivotaltracker.com/story/show/96135874)
+
+* Add PHP 5.6.8, 5.5.24, 5.4.40 to unsupported manifest
+  (https://www.pivotaltracker.com/story/show/94988124)
+
+v3.2.2 Jun 03, 2015
+====================
+
+* Update buildpack with newest php interpreters and modules
+  (https://www.pivotaltracker.com/story/show/93652226)
+
+* Exclude PHP version on generated pages by default
+  (https://www.pivotaltracker.com/story/show/95368312)
+
+* Merge upstream changes
+
+* Add support for using the lastest version of composer
+  (https://www.pivotaltracker.com/story/show/92519522)
+
+v3.2.1 May 07, 2015
+====================
+
+* Update default PHP version to latest 5.4 release
+  (https://www.pivotaltracker.com/story/show/92540904)
+
+* Bump buildpack-packager to support custom buildpack manifests.
+  (https://www.pivotaltracker.com/story/show/93717296)
+
+v3.2.0 Apr 24, 2015
+====================
+
+* Updated supported PHP versions. Currently supported versions:
+	(https://www.pivotaltracker.com/story/show/90697202)
+	* 5.6.7
+	* 5.6.6
+	* 5.5.23
+	* 5.5.22
+	* 5.4.39
+	* 5.4.38
+
+* Updated supported HHVM versions. Currently supported versions:
+	(https://www.pivotaltracker.com/story/show/90697204)
+	* lucid64 stack
+		* 3.2.0
+	* cflinuxfs2 stack
+		* 3.5.0
+		* 3.5.1
+		* 3.6.0
+		* 3.6.1
+
+* Updated supported HTTPD versions. Currently supported versions:
+	(https://www.pivotaltracker.com/story/show/90697208)
+	* 2.4.12
+
+* Updated supported Nginx versions. Currently supported versions:
+	(https://www.pivotaltracker.com/story/show/90697210)
+	* 1.7.10
+	* 1.6.2
+	* 1.5.13
+
+v3.1.1 Apr 22, 2015
+====================
+
+* Updated to New Relic 4.20.2.95
+  (https://www.pivotaltracker.com/story/show/92462510)
+
+* Updated to composer 1.0.0-alpha10
+  (https://www.pivotaltracker.com/story/show/92504742)
+
+* Fix bug that supports PHP 5.6 being specified in `composer.json`
+  (https://github.com/cloudfoundry/php-buildpack/commit/c173c129466f48bb4a571f3983799e156658d000)
+
+* Composer fallback to checking out Github source via HTTPS
+  (https://www.pivotaltracker.com/story/show/88515170)
+
+* Add support for PHP 5.4.39, 5.5.23 & 5.6.7
+
+* Drop support for PHP 5.4.36, 5.5.20 & 5.6.4
+
+v3.1.0 Mar 18, 2015
+====================
+
+* Support cflinuxfs2 stack.
+  (https://www.pivotaltracker.com/story/show/90196104)
+	(https://www.pivotaltracker.com/story/show/88174348)
+
+* Reference git repos by https in cf.Gemfile
+  (https://www.pivotaltracker.com/story/show/90365848)
+
+* Support HHVM 3.6.0 on cflinuxfs2 only
+  (https://www.pivotaltracker.com/story/show/89029952)
+
+* Added config for PHP 5.4.38, 5.5.22 and 5.6.6.
+* Removed old versions of PHP: 5.4.35, 5.5.19 & 5.6.3.
+* Added protobuf extensions
+* Upgraded the version of NewRelic to 4.18.0.89.
+
+v3.0.4 Feb 12, 2015
+====================
+
+This is the first official release of the new PHP buildpack, as approved
+by [Cloud Foundry CAB in December
+2014](http://www.activestate.com/blog/2014/12/cloud-foundry-advisory-board-meeting-2014-december).
+
+This release completely replaces the [legacy
+buildpack](https://github.com/cloudfoundry/php-buildpack-legacy).
+
+* Removed Apache HTTPD 2.4.7 and 2.4.9 because 2.4.10 is the minimum version
+  that supports our new configuration
+  (https://www.pivotaltracker.com/story/show/84393328)
+
+* Introduce support for .htaccess files in Apache
+  (https://www.pivotaltracker.com/story/show/84393328)
+
+* Binaries are now served directly from S3
+  (https://www.pivotaltracker.com/story/show/84419046)
+
+* Environment variables provided by set-env or manifest.yml are visible to
+  apps
+  (https://www.pivotaltracker.com/story/show/86043094)
+  (https://www.pivotaltracker.com/story/show/86800222)
+
+* Add XSL to extensions
+  (https://github.com/cloudfoundry/php-buildpack/commit/0860ba1390c9b7e47c19b24fbb634e859d057125)
+
+* Users can provide a Github OAuth token for Composer
+  (https://www.pivotaltracker.com/story/show/86670590)
+
+* Staging fails on Composer errors
+  (https://www.pivotaltracker.com/story/show/85465540)
+
+* Codizy module is not bundled for licensing reasons
+  (https://www.pivotaltracker.com/story/show/85122672)
+
+v3.0.3 Jan 05, 2015
+====================
+
+* Select HHVM when specified in composer.json
+  (https://www.pivotaltracker.com/story/show/84396680)
+
+* Run Composer with HHVM
+  (https://www.pivotaltracker.com/story/show/84395366)
+
+* Print buildpack version
+  (https://www.pivotaltracker.com/story/show/84397250)
+
+v3.0.2 Dec 29, 2014
+====================
+
+* Fixed online buildpack to include full directories
+  (https://www.pivotaltracker.com/story/show/84415126)
+
+v3.0.1 Dec 23, 2014
+====================
+
+* Switch from Dropbox to S3 as resource store for buildpack
+  (https://www.pivotaltracker.com/story/show/84419046)
+
+* Temporarily disables Codizy extension
+
+* Add PHP 5.4.36, 5.5.20 & 5.6.4.
+  (https://github.com/cloudfoundry/php-buildpack/commit/33990ba60ba90918d607c450af92dddcc620463a)
+
+* Remove PHP PHP 5.4.33, 5.5.17 & 5.6.1.
+  (https://github.com/cloudfoundry/php-buildpack/commit/551ee812becf32dfe3234230374ba240b967d216)
+
+v3.0.0 Dec 18, 2014
+====================
+
+* Migrated [dmikusa-pivotal/cf-php-build-pack](https://github.com/dmikusa-pivotal/cf-php-build-pack) to [cloudfoundry/php-buildpack](https://github.com/cloudfoundry/php-buildpack)
+  (https://www.pivotaltracker.com/story/show/83101106)
+
+* Updated README with Cloud Foundry contribution instructions
+  (https://www.pivotaltracker.com/story/show/83101106)
+
+* Changed zip file name to be CF release compliant
+  (https://www.pivotaltracker.com/story/show/84419616)
