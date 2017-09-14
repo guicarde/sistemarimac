@@ -5,7 +5,13 @@ if (!isset($_SESSION['username'])) {
 }
 
 include_once '../DAO/Registro/Schedule.php';
+include_once '../DAO/Registro/Usuario.php';
 $privilegios = $_SESSION['array_menus'];
+
+$idusu = $_SESSION['id_username'];
+$usuario = new Usuario();
+$usuario->setId($idusu);
+$usuarios=$usuario->listar_conectado($usuario);
 
 if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
 
@@ -41,6 +47,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
         <link href="../Recursos/../Recursos/assets/css/style-responsive.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+        <script type="text/javascript" src="../Recursos/js/JSGeneral.js"></script>
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -61,7 +68,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-                  <p class="centered"><a href="profile.html"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
+                  <p class="centered"><a href="#"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
               	  <h5 class="centered"><?php echo $_SESSION['user_personal'] ?></h5>              	  
                   <li class="mt">
                       <a href="index.php">
@@ -138,7 +145,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                           <li><a  href="MisSchedules.php">Mis Schedules</a></li>
                           <li><a  href="SchedulesActivos.php">Schedules Activos</a></li>
                           <li><a  href="SchedulesFinalizados.php">Schedules Finalizados</a></li>
-                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
+<!--                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>-->
                       </ul>
                   </li>
                   <?php } ?>                   
@@ -157,7 +164,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                   
                    <?php } ?>
                   <?php } ?>
-                  <li class="sub-menu">
+<!--                  <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-clock-o"></i>
                           <span>Tareas Pendientes</span>
@@ -165,7 +172,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                       <ul class="sub">
                           <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
                       </ul>
-                  </li>
+                  </li>-->
                   
                        <li class="sub-menu">
                       <a href="javascript:;" >
@@ -260,7 +267,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                                 <div class="table-responsive">
                                     <table id="example1" class="table table-responsive table-advance table-hover">
                                         <h4><i class="fa fa-angle-right"></i> DETALLE DE ACTIVIDADES DEL SCHEDULE</h4>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="background-color:#68FF7E;font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;TAREAS POR TWS
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="background-color:#68FF7E;font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;TAREAS OBLIGATORIAS
                                         <hr>
 
                                         <?php if ($actividades != null) { ?>
@@ -272,10 +279,10 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                                                     <th width="30%"><i></i> DESCRIPCIÓN</th>
                                                     <th width="10%"><i></i> HORA EJECUCIÓN</th>    
                                                     <th width="10%"><i></i> PROCEDIMIENTO</th>
-                                                    <th width="10%"><i></i> PERIODO</th>
                                                     <th width="5%"><i></i> INICIO</th>
                                                     <th width="5%"><i></i> FINALIZACIÓN</th>
                                                     <th width="5%"><i></i> OBSERVACIÓN</th>
+                                                    <th width="10%"><i></i> ASIGNAR</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -326,6 +333,9 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                                                         if ($r['actividad_pte'] == '12') {
                                                             echo 'WINDOWS';
                                                         }
+                                                        if ($r['actividad_pte'] == '13') {
+                                                            echo 'VISANET';
+                                                        }
                                                         ?></td>
                                                         <td style="font-size:8pt;color:black; font-weight: bold;"><?php echo $r['periodo_nombre'] ?></td>
                                                         <td style="font-size:10pt;color:black; font-weight: bold;"><?php echo $r['actividad_descripcion'] ?></td>
@@ -339,7 +349,6 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                                                         }
                                                         ?>     
                                                         </td>
-                                                        <td style="font-size:8pt;color:black; font-weight: bold;"><?php echo $r['periodo_nombre'] ?></td>
                                                         
 
                                                         <td style="font-size:8pt;color:#050355;font-weight:bold" width="5%">
@@ -403,7 +412,26 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
 
                                                                 <!-- </form>-->
         <?php } ?>
-                                                        </td>  
+                                                        </td>
+                                                        <td style="font-size:8pt;color:#050355;font-weight:bold" width="10%">
+                                                    
+                                                    <?php if ($usuarios != null) { ?>    
+                                                   
+                                                     <form method='POST' action="../Controles/Registro/CSchedule.php" >
+                                                     <input type="hidden" name="hidden_schedule" value="asignar_tarea">    
+                                                     <input type="hidden" name="id_schedule_act" value="<?php echo $r['schedact_idschedact'] ?>">
+                                                     <select class="form-control" name="c_usuario">
+                                                      <?php foreach ($usuarios as $u) {  ?>
+                                                     <option value="<?php echo $u['usu_idusu']; ?>"><?php echo $u['usu_nombres_usuario'].' '.$u['usu_apellidos_usuario']; ?></option>
+                                                     <?php } ?>
+                                                     </select>
+                                                     <button type="submit" class="btn btn-default"><i class="fa fa-check-square"></i> ASIGNAR</button>
+                                                     </form>
+                                                    
+                                                    <?php }else { ?>
+                                                    <div class="alert alert-danger"><i class="fa fa-warning"></i><b> Advertencia!</b><br>No hay Operadores</div> 
+                                                    <?php } ?>
+                                                    </td>
 
 
                                                     </tr>
@@ -425,7 +453,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                             <div class="form-group">
                                 <label class="col-sm-2 col-sm-2 control-label"></label>
                                 <div class="col-sm-10">
-                                    <button type="button" class="btn btn-theme" onclick="cerrarSchedule();"><i class="fa fa-check"></i> GUARDAR</button>
+                                    <button type="button" class="btn btn-theme" onclick="cerrarSchedule();"><i class="fa fa-check"></i> FINALIZAR SCHEDULE</button>
                                     <button type="button" class="btn btn-danger"  onclick="cancelar();"><i class="fa fa-trash-o"></i> CANCELAR</button>
                                 </div>
                             </div>
@@ -460,14 +488,16 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
         <!-- Unicas Librerias Utiliazabas para subir archivos imagens, audio, etc-->
         <link href="../Recursos/filebootstrap/kartik-v-bootstrap-fileinput-d66e684/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
         <script src="../Recursos/filebootstrap/kartik-v-bootstrap-fileinput-d66e684/js/fileinput.js" type="text/javascript"></script>    
-        <!-- fin -->
-        <script type="text/javascript" src="../Recursos/js/JSGeneral.js"></script>
+      
         <!--common script for all pages-->
         <script src="../Recursos/../Recursos/assets/js/common-scripts.js"></script>
         <!--script for this page-->
         <!--script for this page-->
         <script type="text/javascript" src="../Recursos/assets/js/gritter/js/jquery.gritter.js"></script>
         <script type="text/javascript" src="../Recursos/assets/js/gritter-conf.js"></script>
+        
+        
+        
 <!--        <script src="code.jquery.com/jquery-1.12.4.js"></script>-->
         <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
@@ -503,50 +533,5 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
     } );
 } );
  </script> 
-        <script type="text/javascript">
-
-
-                                        $(document).ready(function () {
-                                            setInterval(function () {
-
-<?php
-$ventmax = new Schedule();
-$ventmax->setId($_SESSION['id_schedule']);
-$ventanas = $ventmax->listar_act_ventana_maxima($ventmax);
-if ($ventanas != null) {
-    ?>
-    <?php
-    $num = 1;
-    foreach ($ventanas as $v) {
-        ?>
-
-                                                        var unique_id = $.gritter.add({
-                                                            // (string | mandatory) the heading of the notification
-                                                            title: 'VENTANA MÁXIMA',
-                                                            // (string | mandatory) the text inside the notification
-                                                            text: '<marquee direction="up" behavior="alternate">TAREA:<br><?php echo $v['actividad_descripcion']; ?> <br><br>Cliente:<?php echo $v['cliente_nombre']; ?> <br><br>Hora Máxima de Ventana: <?php echo $v['actividad_ventana_max']; ?> <br><br>Accion a Tomar: <?php echo $v['actividad_accion']; ?></marquee> ',
-                                                            // (string | optional) the image to display on the left
-                                                            image: '../Recursos/assets/img/limites.jpg',
-                                                            // (bool | optional) if you want it to fade out on its own or just sit there
-                                                            sticky: true,
-                                                            // (int | optional) the time you want it to be alive for before fading out
-                                                            time: '',
-                                                            // (string | optional) the class name you want to apply to that specific message
-                                                            class_name: 'my-sticky-class'
-                                                        });
-
-                                                        return false;
-    <?php } ?>
-
-                                                }, 300000);
-
-
-                                            });
-<?php } ?>
-
-
-        </script>
-
-
     </body>
 </html>

@@ -64,7 +64,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-                  <p class="centered"><a href="profile.html"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
+                  <p class="centered"><a href="#"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
               	  <h5 class="centered"><?php echo $_SESSION['user_personal'] ?></h5>              	  
                   <li class="mt">
                       <a href="index.php">
@@ -140,7 +140,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                           <li><a  href="MisSchedules.php">Mis Schedules</a></li>
                           <li class="active"><a  href="SchedulesActivos.php">Schedules Activos</a></li>
                           <li><a  href="SchedulesFinalizados.php">Schedules Finalizados</a></li>
-                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
+<!--                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>-->
                       </ul>
                   </li>
                   <?php } ?>                   
@@ -159,7 +159,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                   
                    <?php } ?>
                   <?php } ?>
-                  <li class="sub-menu">
+<!--                  <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-clock-o"></i>
                           <span>Tareas Pendientes</span>
@@ -167,7 +167,7 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                       <ul class="sub">
                           <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
                       </ul>
-                  </li>
+                  </li>-->
                   
                        <li class="sub-menu">
                       <a href="javascript:;" >
@@ -268,6 +268,9 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                                                         }
                                                         if ($r['actividad_pte'] == '12') {
                                                             echo 'WINDOWS';
+                                                        }
+                                                        if ($r['actividad_pte'] == '13') {
+                                                            echo 'VISANET';
                                                         }
                                                         ?></td>
                                                         <td style="font-size:8pt;color:black; font-weight: bold;"><?php echo $r['periodo_nombre'] ?></td>

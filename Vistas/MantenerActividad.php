@@ -4,14 +4,14 @@ if (!isset($_SESSION['username'])) {
     header("location:login.php");
 }
 include_once '../DAO/Registro/Actividad.php';
-//include_once '../DAO/Registro/Actividad_Dia.php';
 include_once '../DAO/Registro/Periodo.php';
 include_once '../DAO/Registro/Procedimiento.php';
-//include_once '../DAO/Registro/Turno.php';
 include_once '../DAO/Registro/Dia.php';
-//include_once '../DAO/Registro/Periodo.php';
-//$dia = new Dia();
-//$dias = $dia->listar();
+$dia = new Dia();
+$dias = $dia->listar();
+
+$dia2 = new Dia();
+$dias2 = $dia2->listar();
 
 $privilegios = $_SESSION['array_menus'];
 
@@ -47,17 +47,19 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
         <title>SISTEMA DE GENERACIÓN DE SCHEDULE</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="../Recursos/../Recursos/assets/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link href="../Recursos/assets/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../Recursos/assets/js/gritter/css/jquery.gritter.css" />
         <!--external css-->
         <link href="../Recursos/../Recursos/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
+         <!-- DataTables -->
+        <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
         <!-- Custom styles for this template -->
         <link href="../Recursos/../Recursos/assets/css/style.css" rel="stylesheet">
         <link href="../Recursos/css/StyleGeneral.css" rel="stylesheet">
         <link href="../Recursos/../Recursos/assets/css/style-responsive.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+        <!--        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+                <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">-->
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -79,7 +81,7 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu" id="nav-accordion">
 
-                        <p class="centered"><a href="profile.html"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
+                        <p class="centered"><a href="#"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
                         <h5 class="centered"><?php echo $_SESSION['user_personal'] ?></h5>              	  
                         <li class="mt">
                             <a href="index.php">
@@ -155,7 +157,7 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                                             <li><a  href="MisSchedules.php">Mis Schedules</a></li>
                                             <li><a  href="SchedulesActivos.php">Schedules Activos</a></li>
                                             <li><a  href="SchedulesFinalizados.php">Schedules Finalizados</a></li>
-                                            <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
+                                            <!--                                            <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>-->
                                         </ul>
                                     </li>
                                 <?php } ?>                   
@@ -174,15 +176,15 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
 
                             <?php } ?>
                         <?php } ?>
-                        <li class="sub-menu">
-                            <a href="javascript:;" >
-                                <i class="fa fa-clock-o"></i>
-                                <span>Tareas Pendientes</span>
-                            </a>
-                            <ul class="sub">
-                                <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
-                            </ul>
-                        </li>
+                        <!--                        <li class="sub-menu">
+                                                    <a href="javascript:;" >
+                                                        <i class="fa fa-clock-o"></i>
+                                                        <span>Tareas Pendientes</span>
+                                                    </a>
+                                                    <ul class="sub">
+                                                        <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
+                                                    </ul>
+                                                </li>-->
 
                         <li class="sub-menu">
                             <a href="javascript:;" >
@@ -241,7 +243,7 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                                                 <option value="10">SISO</option>
                                                 <option value="11">SITEDS</option>
                                                 <option value="12">WINDOWS</option>
-
+                                                <option value="13">VISANET</option>
                                             </select>
                                         </div>
                                     </div>
@@ -285,9 +287,9 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                     <div class="row mt">
                         <div class="col-md-12">
                             <div class="content-panel">
-                                <table id="example1" class="table table-responsive table-advance table-hover">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <h4><i class="fa fa-angle-right"></i> RESULTADO DE BUSQUEDA DE ACTIVIDADES</h4>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="background-color:#68FF7E;font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;TAREAS POR TWS
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="background-color:#68FF7E;font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;TAREAS OBLIGATORIAS
                                     <hr>
 
                                     <?php if ($actividades != null) { ?>
@@ -351,6 +353,9 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                                                             echo 'SITEDS';
                                                         }
                                                         if ($r['actividad_pte'] == '12') {
+                                                            echo 'WINDOWS';
+                                                        }
+                                                        if ($r['actividad_pte'] == '13') {
                                                             echo 'WINDOWS';
                                                         }
                                                         ?></td>
@@ -435,8 +440,6 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                                                     <td style="font-size:10pt;color:black; font-weight: bold;" width="40%"><?php echo $r['actividad_descripcion'] ?></td>
                                                     <td style="font-size:8pt;color:black; font-weight: bold;" width="5%"><?php echo $r['actividad_horaejecucion'] ?></td>
                                                     <td style="font-size:8pt;color:black; font-weight: bold;" width="10%"><?php echo $r['periodo_nombre'] ?></td>
-
-
                                                     <td>
                                                         <?php
                                                         if ($r['actividad_estado'] == '1') {
@@ -459,31 +462,161 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                                                         <?php } ?>
                                                     </td>
                                                     <td style="font-size:6pt;" width="3%">
-                                                        <form method='POST' id="formusu" action="../Controles/Registro/CActividad.php">
-                                                            <input type="hidden" name="hidden_actividad" value="buscarid">
-                                                            <input type="hidden" name="idactividad" value="<?php echo $r['actividad_idactividad'] ?>">
-                                                            <button type="submit" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-pencil"></i></button>
-                                                        </form>    
+                                                        <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#exampleModal<?php echo $r['actividad_idactividad']; ?>"><i class="fa fa-pencil"> </i><b>&nbsp; EDITAR ACTIVIDAD</b></button>
+                                                        <form action="../Controles/Registro/CActividad.php" method="POST">
+                                                            <div class="modal fade" id="exampleModal<?php echo $r['actividad_idactividad']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                            <h4 class="modal-title" id="exampleModalLabel">EDITAR ACTIVIDAD</h4>
+                                                                        </div>
+
+                                                                        <div class="modal-body">
+                                                                            <input type="hidden" name="hidden_actividad" value="actualizar">
+                                                                            <input type="hidden" name="idactividad" value="<?php echo $r['actividad_idactividad']; ?>"/>
+                                                                            
+
+                                                                            <label for="recipient-name" style="font-size:12px">TURNO:  <a style="color:red"> (*)</a></label>
+                                                                                <select class="form-control select2" style="width: 100%;" name="c_turno" id="id_turno">                                                                                            
+                                                                                    <option value="">--SELECCIONE--</option>
+                                                                                    <?php
+                                                                                    $turno = new Actividad();
+                                                                                    $turno->setId($r['actividad_idactividad']);
+                                                                                    $turnos = $turno->turno_por_actividad($turno);
+
+
+                                                                                    ?>
+                                                                                    <?php if ($turnos != null) { ?>
+                                                                                       
+                                                                                            ?>
+                                                                                            <option value="1" <?php foreach ($turnos as $t) { if ($t['turno_idturno'] == '1') {echo 'selected';}} ?>>Mañana (7:00  a 15:00)</option>
+                                                                                            <option value="2" <?php foreach ($turnos as $t) { if ($t['turno_idturno'] == '2') {echo 'selected';}} ?>>Tarde  (15:00 a 23:00)</option>
+                                                                                            <option value="3" <?php foreach ($turnos as $t) { if ($t['turno_idturno'] == '3') {echo 'selected';}} ?>>Noche  (23:00 a 07:00)</option>                                                                                       
+                                                                                     <?php } ?>
+                                                                                </select>
+                                                                            <br><br>
+                                                                                <label for="recipient-name" style="font-size:12px">TURNO 2:  <a style="color:red"> (*)</a></label>
+                                                                                <select class="form-control select2" style="width: 100%;" name="c_turnob" id="id_turnob">                                                                                            
+                                                                                    <option value="">--SELECCIONE--</option>
+                                                                                    <?php if ($turnos != null) { ?>
+                                                                                       
+                                                                                            ?>
+                                                                                            <option value="4" <?php foreach ($turnos as $t) { if ($t['turno_idturno'] == '4') {echo 'selected';}} ?>>Mañana - Tarde (7:00  a 19:00)</option>
+                                                                                            <option value="5" <?php foreach ($turnos as $t) { if ($t['turno_idturno'] == '5') {echo 'selected';}} ?>>Tarde - Noche  (19:00 a 07:00)</option>
+                                                                                     <?php } ?>
+                                                                                </select>
+                                                                            <br><br>
+                                                                            
+                                                                                <label for="recipient-name" style="font-size:12px">SELECCIONAR DÍAS:  <a style="color:red"> (*)</a></label><br>
+                                                                                <?php
+                                                                                $dia = new Actividad();
+                                                                                $dia->setId($r['actividad_idactividad']);
+                                                                                $adias = $dia->dias_por_actividad($dia);
+                                                                                ?>
+                                                                                <?php foreach ($dias2 as $d) { ?>
+
+                                                                                    <label class="checkbox-inline">
+                                                                                        <input type="checkbox" id="inlineCheckbox<?php echo $d['dia_iddia']; ?>" name="check_list[]" value="<?php echo $d['dia_iddia']; ?>" <?php
+                                                                                        if ($adias != null) {
+                                                                                            foreach ($adias as $t) {
+                                                                                                if ($t['dia_iddia'] == $d['dia_iddia'])
+                                                                                                    echo 'checked';
+                                                                                            }
+                                                                                        }
+                                                                                        ?>> <?php echo $d['dia_nombre']; ?>
+                                                                                    </label>
+                                                                                <br><br>
+                                                                                <?php } ?>    
+                                                                            <br><br>
+                                                                            
+                                                                                <label for="recipient-name" style="font-size:12px">PERIODO:  <a style="color:red"> (*)</a></label>
+                                                                                <select class="form-control select2" style="width: 100%;" name="c_periodo" >
+                                                                                    <option>--SELECCIONE--</option>
+                                                                                    <?php foreach ($periodos as $p) {
+                                                                                        ?>
+
+                                                                                        <option value="<?php echo $p['periodo_idperiodo']; ?>" <?php if ($r['periodo_nombre'] == $p['periodo_nombre']) echo 'selected'; ?>><?php echo $p['periodo_nombre']; ?></option>
+                                                                                    <?php } ?>
+                                                                                </select>
+                                                                            <br><br>    
+                                                                            
+                                                                                <label for="recipient-name" style="font-size:12px">PTE:  <a style="color:red"> (*)</a></label>
+                                                                                <select class="form-control select2" style="width: 100%;" name="c_pte" id="id_pte" required>                                                                                            
+                                                                                    <option>--SELECCIONE--</option>
+                                                                                    <option value="1" <?php if ($r['actividad_pte'] == '1') echo 'selected'; ?>>ACSELX</option>
+                                                                                    <option value="2" <?php if ($r['actividad_pte'] == '2') echo 'selected'; ?>>AIX</option>
+                                                                                    <option value="3" <?php if ($r['actividad_pte'] == '3') echo 'selected'; ?>>AS400</option>
+                                                                                    <option value="4" <?php if ($r['actividad_pte'] == '4') echo 'selected'; ?>>DATA CENTER</option>
+                                                                                    <option value="5" <?php if ($r['actividad_pte'] == '5') echo 'selected'; ?>>DATASTAGE</option>
+                                                                                    <option value="6" <?php if ($r['actividad_pte'] == '6') echo 'selected'; ?>>LEGATO</option>
+                                                                                    <option value="7" <?php if ($r['actividad_pte'] == '7') echo 'selected'; ?>>MOD, WEB</option>
+                                                                                    <option value="8" <?php if ($r['actividad_pte'] == '8') echo 'selected'; ?>>NOTES</option>
+                                                                                    <option value="9" <?php if ($r['actividad_pte'] == '9') echo 'selected'; ?>>RSALUD</option>
+                                                                                    <option value="10" <?php if ($r['actividad_pte'] == '10') echo 'selected'; ?>>SISO</option>
+                                                                                    <option value="11" <?php if ($r['actividad_pte'] == '11') echo 'selected'; ?>>SITEDS</option>
+                                                                                    <option value="12" <?php if ($r['actividad_pte'] == '12') echo 'selected'; ?>>WINDOWS</option>
+                                                                                    <option value="13" <?php if ($r['actividad_pte'] == '13') echo 'selected'; ?>>WINDOWS</option>
+                                                                                </select>
+                                                                           <br><br>
+                                                                            
+                                                                                <label for="recipient-name" style="font-size:12px">DESCRIPCIÓN DE LA ACTIVIDAD:  <a style="color:red"> (*)</a></label>
+                                                                                <textarea name="ta_descripcion" id="id_descripcion" style="width: 100%;" class="form-control" rows="8" required><?php echo $r['actividad_descripcion']; ?></textarea>
+                                                                           <br><br> 
+                                                                            
+                                                                                <label for="recipient-name" style="font-size:12px">PROCEDIMIENTO:  <a style="color:red"> (*)</a></label>
+                                                                                <select class="form-control select2" style="width: 100%;" name="c_procedimiento" id="id_procedimiento" required>
+
+                                                                                    <option>--SELECCIONE--</option>
+                                                                                    <?php foreach ($procedimientos as $p) {
+                                                                                        ?>
+
+                                                                                        <option value="<?php echo $p['procedimiento_idprocedimiento']; ?>" <?php if ($r['procedimiento_nombre'] == $p['procedimiento_nombre']) echo 'selected'; ?>><?php echo $p['procedimiento_nombre']; ?></option>
+                                                                                    <?php } ?>
+
+                                                                                </select>
+                                                                           <br><br>
+                                                                            
+                                                                                <label for="recipient-name" style="font-size:12px">HORA EJECUCIÓN:  <a style="color:red"> (*)</a></label>
+                                                                                <input type="time" name="t_hora" class="form-control" style="width: 100%;" value="<?php echo $r['actividad_horaejecucion']; ?>">
+                                                                            <br><br>
+                                                                            
+                                                                                <label for="recipient-name" style="font-size:12px">TAREA OBLIGATORIA:  <a style="color:red"> (*)</a></label>
+                                                                                <select class="form-control select2" style="width: 100%;" name="c_obligatoria" id="id_obligatoria" requires>                                                                                            
+                                                                                    <option value="">--SELECCIONE--</option>
+                                                                                    <option value="1" <?php if ($r['actividad_obligatoria'] == '1') echo 'selected'; ?>>SI</option>
+                                                                                    <option value="2" <?php if ($r['actividad_obligatoria'] == '2') echo 'selected'; ?>>NO</option>
+                                                                                </select>
+                                                                            <br><br>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">CERRAR</button>
+                                                                            <button type="submit" class="btn btn-primary">ACTUALIZAR</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>                                                     
                                                     </td>
                                                     <td style="font-size:6pt;" width="3%">
                                                         <div id="tws_<?php echo $r['actividad_idactividad'] ?>">
-                                                            <?php if ($r['actividad_obligatoria'] == '1') { ?>
+        <?php if ($r['actividad_obligatoria'] == '1') { ?>
                                                                 <input type="hidden" name="id_hidden_tws" id="id_hidden_tws<?php echo $r['actividad_idactividad'] ?>" value="<?php echo $r['actividad_idactividad'] ?>">
                                                                 <input type="hidden" name="hidden_tws" id="hidden_tws<?php echo $r['actividad_idactividad'] ?>" value="activo">
                                                                 <button type="button" class="btn btn-theme02 btn-xs" onclick="cambiartws('<?php echo $r['actividad_idactividad'] ?>');" title="Desactivar">Obligatoria</button>
-                                                            <?php } else if ($r['actividad_obligatoria'] == '2') { ?>  
+        <?php } else if ($r['actividad_obligatoria'] == '2') { ?>  
                                                                 <input type="hidden" name="id_hidden_tws" id="id_hidden_tws<?php echo $r['actividad_idactividad'] ?>" value="<?php echo $r['actividad_idactividad'] ?>">
                                                                 <input type="hidden" name="hidden_tws" id="hidden_tws<?php echo $r['actividad_idactividad'] ?>" value="inactivo">
                                                                 <button type="button" class="btn btn-warning btn-xs" onclick="cambiartws('<?php echo $r['actividad_idactividad'] ?>');" title="Activar">No Obligatoria</button>
-                                                            <?php } ?>
+        <?php } ?>
                                                         </div>
 
                                                     </td>
                                                 </tr>
-                                            <?php } ?>
+    <?php } ?>
 
                                         </tbody>
-                                    <?php } else { ?>
+<?php } else { ?>
 
                                         <!--                                        <div class="alerta">
                                                                                     <table align="left">
@@ -503,7 +636,7 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
                                         <!--                                        <center><label>Su búsqueda no produjo ningún resultado. </label></center>-->
 
 
-                                    <?php } ?>
+<?php } ?>
                                 </table>
                             </div><!-- /content-panel -->
                         </div><!-- /col-md-12 -->
@@ -525,55 +658,46 @@ if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '')
             <!--footer end-->
         </section>
 
-        <!-- js placed at the end of the document so the pages load faster -->
-        <script src="../Recursos/../Recursos/assets/js/jquery.js"></script>
-        <script src="../Recursos/../Recursos/assets/js/bootstrap.min.js"></script>
+        <!-- jQuery 2.1.4 -->
+        <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+        <script src="../Recursos/assets/js/bootstrap.min.js"></script>
+        <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
         <script class="include" type="text/javascript" src="../Recursos/../Recursos/assets/js/jquery.dcjqaccordion.2.7.js"></script>
         <script src="../Recursos/../Recursos/assets/js/jquery.scrollTo.min.js"></script>
         <script src="../Recursos/../Recursos/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
         <script type="text/javascript" src="../Recursos/js/JSGeneral.js"></script>
-
+<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
         <!--common script for all pages-->
         <script src="../Recursos/../Recursos/assets/js/common-scripts.js"></script>
 
         <!--script for this page-->
         <script type="text/javascript" src="../Recursos/assets/js/gritter/js/jquery.gritter.js"></script>
         <script type="text/javascript" src="../Recursos/assets/js/gritter-conf.js"></script>
-<!--        <script src="code.jquery.com/jquery-1.12.4.js"></script>-->
-        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-<!--       <script src="cdn.datatables.net/buttons/1.3.1/js/buttons.flash.min.js"></script -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<!--       <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>   -->
-<!--       <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>-->
-        <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-<!--        <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js"></script>-->
-
-
-        <script>
-                                                                    $(document).ready(function () {
-                                                                        $('#example1').DataTable({
-                                                                            dom: 'Bfrtip',
-                                                                            buttons: [
-                                                                                {
-                                                                                    extend: 'pageLength',
-                                                                                    text: '<i class="fa fa-list-ol" aria-hidden="true" style="font-size:8pt;color:black; font-weight: bold;"> &nbsp;&nbsp; MOSTRAR</i>',
-                                                                                },
-                                                                                {
-                                                                                    extend: 'excelHtml5',
-                                                                                    text: '<i class="fa fa-file-excel-o" style="font-size:8pt;color:black; font-weight: bold;">&nbsp;&nbsp; DESCARGAR EN EXCEL</i>',
-// 								className : 'btn btn-default',
-                                                                                    customize: function (
-                                                                                            xlsx) {
-                                                                                        var sheet = xlsx.xl.worksheets['reporte_schedule.xml'];
-
-                                                                                        // jQuery selector to add a border
-                                                                                        $('row c[r*="10"]', sheet).attr('s', '25');
-                                                                                    }
-                                                                                }]
-                                                                        });
-                                                                    });
-        </script> 
-
+<!--        <script>
+                                                        $('#exampleModal').on('show.bs.modal', function (event) {
+                                                            var button = $(event.relatedTarget) // Button that triggered the modal
+                                                            var recipient = button.data('whatever') // Extract info from data-* attributes
+                                                            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                                                            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                                                            var modal = $(this)
+                                                            modal.find('.modal-title').text('New message to ' + recipient)
+                                                            modal.find('.modal-body input').val(recipient)
+                                                        })
+        </script>-->
+            <script>
+      $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false
+        });
+      });
+    </script>    
     </body>
 </html>

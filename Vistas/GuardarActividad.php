@@ -4,13 +4,6 @@ if (!isset($_SESSION['username'])) {
     header("location:login.php");
 }
 //------------------------------------------------
-if(!isset($_SESSION['accion_actividad'])){ 
-    $_SESSION['accion_actividad']="";
-}
-
-if(!isset($_SESSION['arreglo_turnos'])){ 
-    $_SESSION['arreglo_turnos']="";
-}
 include_once '../DAO/Registro/Turno.php';
 include_once '../DAO/Registro/Dia.php';
 include_once '../DAO/Registro/Procedimiento.php';
@@ -30,22 +23,6 @@ $periodo = new Periodo();
 $periodos = $periodo->listar();
 
 $privilegios = $_SESSION['array_menus'];
-
-if(isset($_SESSION['actividad_idactividad']))         { $idactividad = $_SESSION['actividad_idactividad'];} else{ $idactividad =""; }
-if(isset($_SESSION['actividad_pte']))         { $pte = $_SESSION['actividad_pte'];} else{ $pte =""; }
-
-if(isset($_SESSION['actividad_horaejecucion']))         { $horaeje = $_SESSION['actividad_horaejecucion'];} else{ $horaeje =""; }
-if(isset($_SESSION['actividad_obligatoria']))         { $obligatoria = $_SESSION['actividad_obligatoria'];} else{ $obligatoria =""; }
-
-if(isset($_SESSION['actividad_descripcion']))         { $descripcion = $_SESSION['actividad_descripcion'];} else{ $descripcion =""; }
-if(isset($_SESSION['periodo_idperiodo']))         { $idperiodo = $_SESSION['periodo_idperiodo'];} else{ $idperiodo =""; }
-if(isset($_SESSION['procedimiento_idprocedimiento']))         { $idproc = $_SESSION['procedimiento_idprocedimiento'];} else{ $idproc =""; }
-if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] == 'editar') {
-$diast = $_SESSION['arreglo_dias'];
-//var_dump($diast);
-//exit();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +72,7 @@ $diast = $_SESSION['arreglo_dias'];
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-                  <p class="centered"><a href="profile.html"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
+                  <p class="centered"><a href="#"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
               	  <h5 class="centered"><?php echo $_SESSION['user_personal'] ?></h5>              	  
                   <li class="mt">
                       <a href="index.php">
@@ -171,7 +148,7 @@ $diast = $_SESSION['arreglo_dias'];
                           <li><a  href="MisSchedules.php">Mis Schedules</a></li>
                           <li><a  href="SchedulesActivos.php">Schedules Activos</a></li>
                           <li><a  href="SchedulesFinalizados.php">Schedules Finalizados</a></li>
-                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
+<!--                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>-->
                       </ul>
                   </li>
                   <?php } ?>                   
@@ -190,7 +167,7 @@ $diast = $_SESSION['arreglo_dias'];
                   
                    <?php } ?>
                   <?php } ?>
-                  <li class="sub-menu">
+<!--                  <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-clock-o"></i>
                           <span>Tareas Pendientes</span>
@@ -198,7 +175,7 @@ $diast = $_SESSION['arreglo_dias'];
                       <ul class="sub">
                           <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
                       </ul>
-                  </li>
+                  </li>-->
                   
                        <li class="sub-menu">
                       <a href="javascript:;" >
@@ -241,8 +218,7 @@ $diast = $_SESSION['arreglo_dias'];
                   	  <h4 class="mb"><i class="fa fa-angle-right"></i> DATOS DE LA ACTIVIDAD</h4>
                     
                  <form class="form-horizontal style-form" action="../Controles/Registro/CActividad.php" method="POST" >
-                 <input type="hidden" id="hiddenactividad" name="hidden_actividad" value="save">  
-                 <input type="hidden" name="idactividad" value="<?php echo $idactividad ?>"/>
+                 <input type="hidden" id="hiddenactividad" name="hidden_actividad" value="registrar">  
                  
                  <div class="form-group">
                                         <label for="inputturno" class="col-sm-2 control-label">Turno</label>
@@ -250,9 +226,9 @@ $diast = $_SESSION['arreglo_dias'];
                                             <select class="form-control select2" name="c_turno" id="id_turno" >
 
                                                 <option value=""> --SELECCIONE--</option>
-                                            <option value="1" <?php if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '') { if ($turnos != null) {foreach ($turnos as $t) { if ($t['turno_idturno']==1){echo 'selected';} }}}?>>Mañana (7:00  a 15:00)</option>
-                                            <option value="2" <?php if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '') { if ($turnos != null) {foreach ($turnos as $t) { if ($t['turno_idturno']==2){echo 'selected';} }}}?>>Tarde  (15:00 a 23:00)</option>
-                                            <option value="3" <?php if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '') { if ($turnos != null) {foreach ($turnos as $t) { if ($t['turno_idturno']==3){echo 'selected';} }}}?>>Noche  (23:00 a 07:00)</option>
+                                            <option value="1">Mañana (7:00  a 15:00)</option>
+                                            <option value="2">Tarde  (15:00 a 23:00)</option>
+                                            <option value="3">Noche  (23:00 a 07:00)</option>
 
                                                       </select>
                                         </div>
@@ -263,8 +239,8 @@ $diast = $_SESSION['arreglo_dias'];
                                             <select class="form-control select2" name="c_turnob" id="id_turnob">
 
                                                 <option value="">--SELECCIONE--</option>
-                                            <option value="4" <?php if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '') { if ($turnos != null) {foreach ($turnos as $t) { if ($t['turno_idturno']==4){echo 'selected';} }}}?>>Mañana - Tarde (7:00  a 19:00)</option>
-                                            <option value="5" <?php if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '') { if ($turnos != null) {foreach ($turnos as $t) { if ($t['turno_idturno']==5){echo 'selected';} }}}?>>Tarde - Noche  (19:00 a 07:00)</option>
+                                            <option value="4">Mañana - Tarde (7:00  a 19:00)</option>
+                                            <option value="5">Tarde - Noche  (19:00 a 07:00)</option>
 
                                                       </select>
                                         </div>
@@ -277,7 +253,7 @@ $diast = $_SESSION['arreglo_dias'];
                                                 ?>
                                             
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="inlineCheckbox<?php echo $d['dia_iddia']; ?>" name="check_list[]" value="<?php echo $d['dia_iddia']; ?>" <?php if (isset($_SESSION['accion_actividad']) && $_SESSION['accion_actividad'] != '') { if ($diast != null) { foreach ($diast as $t) { if ($t['dia_iddia'] == $d['dia_iddia']) echo 'checked'; }} }?>> <?php echo $d['dia_nombre']; ?>
+                                                <input type="checkbox" id="inlineCheckbox<?php echo $d['dia_iddia']; ?>" name="check_list[]" value="<?php echo $d['dia_iddia']; ?>"> <?php echo $d['dia_nombre']; ?>
                                             </label>
                                             <br>
                                                     <?php } ?>                                   
@@ -292,7 +268,7 @@ $diast = $_SESSION['arreglo_dias'];
                                                                         <?php foreach ($periodos as $p) {   
                                                                           ?>
 
-                                                                          <option value="<?php echo $p['periodo_idperiodo']; ?>" <?php if ($idperiodo == $p['periodo_idperiodo']) echo 'selected'; ?>><?php echo $p['periodo_nombre']; ?></option>
+                                                                          <option value="<?php echo $p['periodo_idperiodo']; ?>"><?php echo $p['periodo_nombre']; ?></option>
                                                                       <?php } ?>
 
                                                       </select>
@@ -304,19 +280,19 @@ $diast = $_SESSION['arreglo_dias'];
                                         <div class="col-sm-10">
                                             <select class="form-control" name="c_pte" required>
                                                 <option value="">--SELECCIONE--</option>
-                                                <option value="1" <?php if ($pte == '1') echo 'selected'; ?>>ACSELX</option>
-                                                <option value="2" <?php if ($pte == '2') echo 'selected'; ?>>AIX</option>
-                                                <option value="3" <?php if ($pte == '3') echo 'selected'; ?>>AS400</option>
-                                                <option value="4" <?php if ($pte == '4') echo 'selected'; ?>>DATA CENTER</option>
-                                                <option value="5" <?php if ($pte == '5') echo 'selected'; ?>>DATASTAGE</option>
-                                                <option value="6" <?php if ($pte == '6') echo 'selected'; ?>>LEGATO</option>
-                                                <option value="7" <?php if ($pte == '7') echo 'selected'; ?>>MOD, WEB</option>
-                                                <option value="8" <?php if ($pte == '8') echo 'selected'; ?>>NOTES</option>
-                                                <option value="9" <?php if ($pte == '9') echo 'selected'; ?>>RSALUD</option>
-                                                <option value="10" <?php if ($pte == '10') echo 'selected'; ?>>SISO</option>
-                                                <option value="11" <?php if ($pte == '11') echo 'selected'; ?>>SITEDS</option>
-                                                <option value="12" <?php if ($pte == '12') echo 'selected'; ?>>WINDOWS</option>
-                                                
+                                                <option value="1">ACSELX</option>
+                                                <option value="2">AIX</option>
+                                                <option value="3">AS400</option>
+                                                <option value="4">DATA CENTER</option>
+                                                <option value="5">DATASTAGE</option>
+                                                <option value="6">LEGATO</option>
+                                                <option value="7">MOD, WEB</option>
+                                                <option value="8">NOTES</option>
+                                                <option value="9">RSALUD</option>
+                                                <option value="10">SISO</option>
+                                                <option value="11">SITEDS</option>
+                                                <option value="12">WINDOWS</option>
+                                                <option value="13">VISANET</option>
                                             </select>
                                         </div>
                         </div>
@@ -324,7 +300,7 @@ $diast = $_SESSION['arreglo_dias'];
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">DESCRIPCIÓN DE LA ACTIVIDAD</label>
                               <div class="col-sm-10">
-                                  <textarea name="ta_descripcion" id="id_descripcion" class="form-control" rows="8" required><?php echo $descripcion;?></textarea>
+                                  <textarea name="ta_descripcion" id="id_descripcion" class="form-control" rows="8" required></textarea>
                               </div>
                           </div>  
                          <div class="form-group">
@@ -336,7 +312,7 @@ $diast = $_SESSION['arreglo_dias'];
                                                                         <?php foreach ($procedimientos as $p) {   
                                                                           ?>
 
-                                                                          <option value="<?php echo $p['procedimiento_idprocedimiento']; ?>" <?php if ($idproc == $p['procedimiento_idprocedimiento']) echo 'selected'; ?>><?php echo $p['procedimiento_nombre']; ?></option>
+                                                                          <option value="<?php echo $p['procedimiento_idprocedimiento']; ?>" ><?php echo $p['procedimiento_nombre']; ?></option>
                                                                       <?php } ?>
 
                                                       </select>
@@ -346,7 +322,7 @@ $diast = $_SESSION['arreglo_dias'];
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">HORA EJECUCIÓN</label>
                               <div class="col-sm-10">
-                                  <input type="time" name="t_hora" maxlength="8" value="<?php echo $horaeje; ?>" class="form-control" required>
+                                  <input type="time" name="t_hora" maxlength="8" class="form-control" required>
                               </div>
                           </div>
 
@@ -356,8 +332,8 @@ $diast = $_SESSION['arreglo_dias'];
                                         <div class="col-sm-10">
                                             <select class="form-control" name="c_obligatoria">
                                                 <option value="">--SELECCIONE--</option>
-                                                <option value="1" <?php if ($obligatoria == '1') echo 'selected'; ?>>SI</option>
-                                                <option value="2" <?php if ($obligatoria == '2') echo 'selected'; ?>>NO</option>
+                                                <option value="1">SI</option>
+                                                <option value="2">NO</option>
                                             </select>
                                         </div>
                         </div>

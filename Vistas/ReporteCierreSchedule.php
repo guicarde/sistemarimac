@@ -17,9 +17,7 @@ class IMAGEN_NUEVA extends TCPDF {
     public function Header() {
         
        
-         
-//        $image_file2 = K_PATH_IMAGES.'fondo_factura.jpg';
-//        $this->Image($image_file2, 0, 0, 257, 210, '', '', '', false, 300, '', false, false, 0);
+  
         
          $image_file = K_PATH_IMAGES.'Logo-Rimac-Seguros.jpg';
         
@@ -32,7 +30,7 @@ class IMAGEN_NUEVA extends TCPDF {
                 .' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                 .' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
                 .' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-                . '<table width="300px"><tr><td></td></tr><tr><td width="18%"></td><td width="80%">'
+                .'<table><tr><td></td></tr><tr><td width="18%"></td><td width="80%">'
                 .'<table bgcolor="#D6D2D2" border="0" style="border:2 px solid black">'
                 . '<tr><td align="center"><label style="font-family:Courier;font-size:22; font-weight:bold;">SCHEDULE</label></td></tr>'
                 . '<tr><td align="center"><label style="font-family:Courier;font-size:15; font-weight:bold;">N° 000'.$idschedule.'</label></td></tr>'
@@ -42,6 +40,7 @@ class IMAGEN_NUEVA extends TCPDF {
         $this->writeHTML($html, true, false, true, false, '');
         
         $this->SetFont('helvetica', 'B', 15);
+      
     }
 
     // Page footer
@@ -52,10 +51,10 @@ class IMAGEN_NUEVA extends TCPDF {
         $this->SetFont('helvetica', 'I', 8);
         // Page number
         
-        $this->Cell(0, 2, '_____________________________________________________________________________________________________________________________________________________________________________' , 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 5, '____________________________________________________________________________________________________________________________' , 0, 1, 'C', 0, '', 0, false, 'T', 'M');
         $this->Cell(0, 2, '© Copyright 2017, Schedule RIMAC  GTS - IBM DEL PERU' , 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-        $this->Cell(0, 2, 'Av. Javier Prado Este 6230, Lima, Perú ' , 0, 1, 'C', 0, '', 0, false, 'T', 'M');
-        $this->Cell(0, 2, 'Pagina '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 5, 'Av. Javier Prado Este 6230, Lima, Perú ' , 0, 1, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 5, 'Pagina '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, 1, 'C', 0, '', 0, false, 'T', 'M');
         
     }
     
@@ -65,12 +64,13 @@ class IMAGEN_NUEVA extends TCPDF {
 // Crear el documento
 $pdf = new IMAGEN_NUEVA(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
  
+
 // Información referente al PDF
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor($_SESSION['username']);
-$pdf->SetTitle('SCHEDULE RIMAC');
-$pdf->SetSubject('SCHEDULE RIMAC');
-$pdf->SetKeywords('SCHEDULE RIMAC');
+$pdf->SetTitle('SCHEDULE DE OPERACIONES');
+$pdf->SetSubject('SCHEDULE DE OPERACIONES');
+$pdf->SetKeywords('SCHEDULE DE OPERACIONES');
  
 // Contenido de la cabecera
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -104,13 +104,16 @@ $arreglo2 = $_SESSION['Schedule_cabecera'];
 $pdf->Cell(0, 7, '___________________________________________________________________________________________________________________',0,1,'C');
 //$pdf->Cell(0, 10, '',0,1,'C');
 $pdf->SetFont('helvetica','B',24);
-$pdf->Cell(0, 10, 'REPORTE DE SCHEDULE RIMAC',0,1,'C');
+$pdf->Cell(0, 10, 'REPORTE DE SCHEDULE FINALIZADO',0,1,'C');
 $num=1;
 
 
 foreach ($arreglo as $r)
   {
-        if($r['actividad_pte']=='1'){
+    $horaini = date('d-m-Y H:i',strtotime($r['schedact_horaini']));
+    $horafin = date('d-m-Y H:i',strtotime($r['schedact_horafin']));  
+    
+     if($r['actividad_pte']=='1'){
         $pte = 'ACSELX';
     }else if($r['actividad_pte']=='2') {
         $pte = 'AIX';
@@ -138,24 +141,27 @@ foreach ($arreglo as $r)
         $pte = 'VISANET';
     }
     
-     if($r['actividad_obligatoria']=='1'){
+    if($r['actividad_obligatoria']=='1'){
         $color = '#68FF7E';
     }else if($r['actividad_obligatoria']=='2') {
         $color = '#FFFFFF';
     }
-
     
   $tabla_detalle[]=
   '
-  <table border="1" style="border: 1px solid black;font-size:7;font-family:courier;font-weight:bold;" cellpadding="2">
-        <tr align="center" bgcolor="'.$color.'" >
+  <table border="1" style="border: 1px solid black;font-size:5;font-family:courier;font-weight:bold;"  width="1380" cellpadding="2">
+        <tr align="center">
             <td width="30"><label>'.$num.'</label></td>
-            <td width="100"><label>'.$pte.'</label></td>
-            <td width="625" align="left"><label>'.$r['actividad_descripcion'].'</label></td>    
-            <td width="45"><label>'.substr($r['actividad_horaejecucion'], 0, -3).'</label></td>
+            <td width="80"><label>'.$pte.'</label></td>
+            <td width="300" align="left"><label>'.$r['actividad_descripcion'].'</label></td>    
+            <td width="45"><label>'.substr($r['actividad_horaejecucion'], 0, 5).'</label></td>
             <td width="70"><label>'.$r['procedimiento_nombre'].'</label></td>
-            <td width="70"><label>'.$r['periodo_nombre'].'</label></td>   
-            
+            <td width="50"><label>'.$r['periodo_nombre'].'</label></td>   
+            <td  width="60" bgcolor="yellow"><b><label>'.$horaini.'</label></b></td>  
+            <td  width="60" bgcolor="#D2FDFC"><label>'.$horafin.'</label></td>
+            <td  width="60" bgcolor="#819CF4"><label>'.substr($r['schedact_duracion'], 0,5).'</label></td>    
+            <td  width="60" bgcolor="#FFEBAC" sytle="font-weight:bold;"><label>'.$r['schedact_comentario'].'</label></td>
+            <td><label>'.$r['usu_nombres_usuario'].' '.$r['usu_apellidos_usuario'].'</label></td> 
         </tr>
   </table>
 ';
@@ -174,6 +180,7 @@ $pdf->SetFont('Helvetica', '', 9);
 
 foreach ($arreglo2 as $d)
   {
+$firma = $d['firma'];
 $detalle_reporte = '
     <br><br>  
     <table border="0" style="border: 2px solid black; font-size:10"cellspacing="2" width="1280">
@@ -194,11 +201,11 @@ $detalle_reporte = '
             <td></td>
             <td></td>
         </tr>
-        <tr style="font-weight:bold;">            
+        <tr style="font-weight:bold;">
+            <td><b>SEDE:</b></td>
+            <td><label>LA MOLINA</label></td>
             <td><b>TURNO:</b></td>
             <td><label>'.$d['turno_nombre'].'</label></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -228,15 +235,8 @@ $detalle_reporte = '
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Favor extender documento a la orden de IBM DEL PERÚ</b>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Favor extender documento a la orden de IBM DEL PERÚ</b>
+<br>
 '; 
   }
 $pdf->writeHTML($detalle_reporte, true, false, true, false, '');
@@ -247,14 +247,19 @@ $pdf->SetFont('Helvetica', '', 6);
 
 $html = '
 <br><br>  
-<table border="1" bgcolor="#121359" color="white" style="font-size:5;font-family:courier;font-weight:bold">
+<table border="1" bgcolor="#121359" color="white" width="1380" style="font-size:5;font-family:courier;font-weight:bold">
         <tr align="center">
             <td width="30"><b>N°</b></td>
-            <td width="100"><b>PTE</b></td>
-            <td width="625"><b>DESCRIPCION</b></td> 
+            <td width="80"><b>PTE</b></td>
+            <td width="300"><b>DESCRIPCION</b></td> 
             <td width="45"><b>HORA EJECUCION</b></td>
             <td width="70"><b>PROCEDIMIENTO</b></td>
-            <td width="70"><b>PERIODO</b></td>   
+            <td width="50"><b>PERIODO</b></td>   
+            <td  width="60"><b>HORA INICIO</b></td>   
+            <td  width="60"><b>HORA FIN</b></td> 
+            <td  width="60"><b>DURACIÓN</b></td>    
+            <td  width="60"><b>COMENTARIO</b></td>
+            <td><b>OPERADOR</b></td>
         </tr>
 </table>
 
@@ -264,28 +269,28 @@ $html = '
 
   <table border="0" style="font-size:7;font-family:courier;font-weight:bold"  width="630" cellpadding="6">
         <tr align="center">
-            <td width="300"><label></label></td>
-            <td width="360" rowspan="3"><label><img src="../Controles/Firmas/firma.jpg" alt="test alt attribute" width="145" height="60" border="0" /></label></td>
+            <td width="50"><label></label></td>
+            <td width="360" rowspan="3"><label><img src="../Controles/Firmas/'.$firma.'" alt="test alt attribute" width="145" height="60" border="0" /></label></td>
             
         </tr>
   </table>  
   <table border="0" style="font-size:7;font-family:courier;font-weight:bold"  width="630" cellpadding="6">
         <tr align="center">
-            <td width="300"><label></label></td>
+            <td width="50"><label></label></td>
             <td width="360"><label>____________________________</label></td>
             
         </tr>
   </table>  
   <table border="0" style="font-size:7;font-family:courier;font-weight:bold"  width="630" cellpadding="6">
         <tr align="center">
-            <td width="300"><label></label></td>
+            <td width="50"><label></label></td>
             <td width="360"><label>PROCESADO</label></td>
             
         </tr>
   </table>
   <table border="0" style="font-size:7;font-family:courier;font-weight:bold"  width="630" cellpadding="6">
         <tr align="center">
-            <td width="300"><label></label></td>
+            <td width="50"><label></label></td>
             <td width="360"><label></label></td>
             <td colspan="2" style="color:red; font-weight:bold;"><label>ADMINISTRADOR</label></td>
         </tr>
@@ -302,7 +307,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 
  
 //Cerramos y damos salida al fichero PDF
-$pdf->Output('Reporte_Schedule_.pdf', 'I');
+$pdf->Output('Reporte_Cierre_Schedule.pdf', 'I');
 
 }
 else{

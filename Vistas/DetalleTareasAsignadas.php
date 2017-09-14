@@ -5,7 +5,13 @@ if (!isset($_SESSION['username'])) {
 }
 
 include_once '../DAO/Registro/Schedule.php';
+include_once '../DAO/Registro/Usuario.php';
 $privilegios = $_SESSION['array_menus'];
+
+$idusu = $_SESSION['id_username'];
+$usuario = new Usuario();
+$usuario->setId($idusu);
+$usuarios=$usuario->listar_conectado($usuario);
 
 $actividad = new Schedule();
 $actividad->setIdusu($_SESSION['id_username']);
@@ -55,7 +61,7 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-                  <p class="centered"><a href="profile.html"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
+                  <p class="centered"><a href="#"><img src="../Controles/Fotos/<?php echo $_SESSION['foto']; ?>" class="img-circle" width="60"></a></p>
               	  <h5 class="centered"><?php echo $_SESSION['user_personal'] ?></h5>              	  
                   <li class="mt">
                       <a href="index.php">
@@ -131,7 +137,7 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                           <li><a  href="MisSchedules.php">Mis Schedules</a></li>
                           <li><a  href="SchedulesActivos.php">Schedules Activos</a></li>
                           <li><a  href="SchedulesFinalizados.php">Schedules Finalizados</a></li>
-                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
+<!--                          <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>-->
                       </ul>
                   </li>
                   <?php } ?>                   
@@ -150,7 +156,7 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                   
                    <?php } ?>
                   <?php } ?>
-                  <li class="sub-menu">
+<!--                  <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-clock-o"></i>
                           <span>Tareas Pendientes</span>
@@ -158,7 +164,7 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                       <ul class="sub">
                           <li><a  href="TareasPendientes.php">Tareas Pendientes</a></li>
                       </ul>
-                  </li>
+                  </li>-->
                   
                        <li class="sub-menu">
                       <a href="javascript:;" >
@@ -214,7 +220,7 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                                                     <th width="5%"><i></i> INICIO</th>
                                                     <th width="5%"><i></i> FINALIZACIÓN</th>
                                                     <th width="5%"><i></i> OBSERVACIÓN</th>
-<!--                                                <th><i></i> ASIGNAR</th>-->
+                                                    <th><i></i> ASIGNAR</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -264,6 +270,9 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                                                         }
                                                         if ($r['actividad_pte'] == '12') {
                                                             echo 'WINDOWS';
+                                                        }
+                                                         if ($r['actividad_pte'] == '13') {
+                                                            echo 'VISANET';
                                                         }
                                                         ?></td>
                                                         <td style="font-size:8pt;color:black; font-weight: bold;"><?php echo $r['periodo_nombre'] ?></td>
@@ -319,7 +328,26 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                                                         <button type="submit" class="btn btn-theme03"><i class="fa fa-check-square"></i> GUARDAR</button>
                                                         
                                                         </form>
-                                                    </td>                                              
+                                                    </td>      
+                                                    <td style="font-size:8pt;color:#050355;font-weight:bold" width="10%">
+                                                    
+                                                    <?php if ($usuarios != null) { ?>    
+                                                   
+                                                     <form method='POST' action="../Controles/Registro/CSchedule.php" >
+                                                     <input type="hidden" name="hidden_schedule" value="asignar_tarea_asignada">    
+                                                     <input type="hidden" name="id_schedule_act_asig" value="<?php echo $r['actasig_idactasig'] ?>">
+                                                     <select class="form-control" name="c_usuario">
+                                                      <?php foreach ($usuarios as $u) {  ?>
+                                                     <option value="<?php echo $u['usu_idusu']; ?>"><?php echo $u['usu_nombres_usuario'].' '.$u['usu_apellidos_usuario']; ?></option>
+                                                     <?php } ?>
+                                                     </select>
+                                                     <button type="submit" class="btn btn-default"><i class="fa fa-check-square"></i> ASIGNAR</button>
+                                                     </form>
+                                                    
+                                                    <?php }else { ?>
+                                                    <div class="alert alert-danger"><i class="fa fa-warning"></i><b> Advertencia!</b><br>No hay Operadores</div> 
+                                                    <?php } ?>
+                                                    </td>
                                                 </tr>
                                             <?php } ?>
 
@@ -340,7 +368,7 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                                                 </tr>
                                             </table>
                                         </div>-->
-<div class="alert alert-danger"><i class="fa fa-warning"></i><b> Error!</b><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No te han asignando ninguna tarea..!</div> 
+<div class="alert alert-danger"><i class="fa fa-warning"></i><b> MENSAJE!</b><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No te han asignando ninguna tarea..!</div> 
 <!--                                        <center><label>Su búsqueda no produjo ningún resultado. </label></center>-->
 
 
@@ -349,13 +377,13 @@ $actividades = $actividad->act_asig_para_usuario($actividad);
                                 
                             </div><!-- /content-panel -->
                             <br>
-                                <div class="form-group">
+<!--                                <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label"></label>
                               <div class="col-sm-10">
                                   <button type="button" class="btn btn-theme" onclick="cerrarSchedule();"><i class="fa fa-check"></i> GUARDAR</button>
                                   <button type="button" class="btn btn-danger"  onclick="cancelar();"><i class="fa fa-trash-o"></i> CANCELAR</button>
                               </div>
-                          </div>
+                          </div>-->
                         </div><!-- /col-md-12 -->
                     </div>
             
