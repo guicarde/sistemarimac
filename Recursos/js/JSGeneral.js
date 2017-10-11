@@ -323,3 +323,47 @@ function checkPassword(str)
     }
     return true;
   }
+  
+  function validar() { 
+
+    if(confirm('Usted va desasignar el schedule!  \n \n Esta seguro de continuar  ?')) { 
+
+           if(confirm(' Esta seguro ?  \n Esto implica que todos los registros del schedule se borraran .\n Esta completamente seguro de continuar?')) {document.getElementById('form_desasignar').submit();} 
+
+              else {
+               return false;
+
+             }   
+
+      }else {
+               return false;
+             }  
+}
+function actualiza_hora_inicio(id){
+    var x = document.getElementById("id_hora_inicio_final"+id);
+    var hora = document.getElementById("id_hora_inicio_final"+id).value;
+    var id_sched_act = id;
+    $("#test"+id).load("../Controles/Registro/CSchedule.php", 
+            {
+              hidden_schedule : 'actualiza_hora_inicio',
+              id_schedule_act: id_sched_act,
+              hora_inicio: hora
+            }, function(){
+            }
+            );    
+    x.style.backgroundColor = "yellow";
+}
+function actualiza_hora_fin(id){
+    var x = document.getElementById("id_hora_fin_final"+id);
+    var hora = document.getElementById("id_hora_fin_final"+id).value;
+    var id_sched_act = id;
+    $("#test"+id).load("../Controles/Registro/CSchedule.php", 
+            {
+              hidden_schedule : 'actualiza_hora_fin',
+              id_schedule_act: id_sched_act,
+              hora_fin: hora
+            }, function(){
+            }
+            );    
+    x.style.backgroundColor = "yellow";
+}

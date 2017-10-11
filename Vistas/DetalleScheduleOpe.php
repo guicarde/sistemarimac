@@ -359,7 +359,9 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
                                                                     <button type="submit" class="btn btn-primary btn-xs" onclick="iniciarTarea('<?php echo $r['schedact_idschedact'] ?>');" title="Iniciar Tarea"><i class="fa fa-clock-o"> Iniciar</i></button>
 
         <?php } else { ?>  
-                                                                    <div class="alert alert-warning"><?php echo date('H:i:s', strtotime($r['schedact_horaini'])) ?></div> 
+                                                                    <div id="test<?php echo $r['schedact_idschedact'];?>" class="alert alert-warning">
+                                                                        <input type="time" id="id_hora_inicio_final<?php echo $r['schedact_idschedact'] ?>" value="<?php echo date('H:i:s', strtotime($r['schedact_horaini'])) ?>" onblur="actualiza_hora_inicio('<?php echo $r['schedact_idschedact'];?>')">
+                                                                    </div> 
                                                                     <input type="hidden" id="id_marcado_hora_inicio<?php echo $r['schedact_idschedact'] ?>" value="<?php echo date('H:i:s', strtotime($r['schedact_horaini'])) ?>">
         <?php } ?>
                                                             </div>
@@ -379,7 +381,9 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
 
                                                                 <?php } ?>
                                                                 <?php if ($r['schedact_horafin'] != '') { ?>
-                                                                    <div class="alert alert-success"><?php echo date('H:i:s', strtotime($r['schedact_horafin'])) ?></div> 
+                                                                    <div class="alert alert-success">
+                                                                        <input type="time" id="id_hora_fin_final<?php echo $r['schedact_idschedact'] ?>" value="<?php echo date('H:i:s', strtotime($r['schedact_horafin'])) ?>" onblur="actualiza_hora_fin('<?php echo $r['schedact_idschedact'];?>')">
+                                                                     </div> 
                                                                 <?php } ?>
         <?php } ?>
 
@@ -532,6 +536,6 @@ if (isset($_SESSION['accion_schedule']) && $_SESSION['accion_schedule'] != '') {
 							} ]
     } );
 } );
- </script> 
+ </script>
     </body>
 </html>

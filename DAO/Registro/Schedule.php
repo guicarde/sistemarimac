@@ -316,7 +316,7 @@ function setIdschedactasig($idschedactasig) {
     }
     
          function buscarPorId(Schedule $s){
-       $con = Conectar();
+       $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=ghdfdnwh user=ghdfdnwh password=TGZ1L2einHMZRh1aDcroITXEBTovypZD") or die("error");
        $sql = "SELECT * FROM schedule_buscar_por_id($s->id)";
         $res = pg_query($con,$sql);
         $array=null;
@@ -356,7 +356,7 @@ function setIdschedactasig($idschedactasig) {
     
              function reporte(Schedule $s)
     {
-         $con = pg_connect("host=localhost port=5432 dbname=BDRIMAC user=postgres password=123456") or die("error");       
+         $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=ghdfdnwh user=ghdfdnwh password=TGZ1L2einHMZRh1aDcroITXEBTovypZD") or die("error");       
          $sql = "SELECT * FROM schedule_reporte($s->id)";
      
          $res = pg_query($con,$sql);
@@ -375,7 +375,7 @@ function setIdschedactasig($idschedactasig) {
     }
                  function reporte_cierre_dia(Schedule $s)
     {
-         $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=dahksxkg user=dahksxkg password=YgmtejPoSFuis6OxjB0OcVxWoKuqtkY2") or die("error");
+         $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=ghdfdnwh user=ghdfdnwh password=TGZ1L2einHMZRh1aDcroITXEBTovypZD") or die("error");
          $sql = "SELECT * FROM schedule_reporte_cierre_dia($s->id)";
      
          $res = pg_query($con,$sql);
@@ -394,7 +394,7 @@ function setIdschedactasig($idschedactasig) {
     }
                      function reporte_cierre_tarde_noche(Schedule $s)
     {
-         $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=dahksxkg user=dahksxkg password=YgmtejPoSFuis6OxjB0OcVxWoKuqtkY2") or die("error");
+         $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=ghdfdnwh user=ghdfdnwh password=TGZ1L2einHMZRh1aDcroITXEBTovypZD") or die("error");
          $sql = "SELECT * FROM schedule_reporte_cierre_tarde_noche($s->id)";
      
          $res = pg_query($con,$sql);
@@ -413,7 +413,7 @@ function setIdschedactasig($idschedactasig) {
     }
                      function reporte_cierre_noche(Schedule $s)
     {
-         $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=dahksxkg user=dahksxkg password=YgmtejPoSFuis6OxjB0OcVxWoKuqtkY2") or die("error");
+         $con = pg_connect("host=echo.db.elephantsql.com port=5432 dbname=ghdfdnwh user=ghdfdnwh password=TGZ1L2einHMZRh1aDcroITXEBTovypZD") or die("error");
          $sql = "SELECT * FROM schedule_reporte_cierre_noche($s->id)";
      
          $res = pg_query($con,$sql);
@@ -454,7 +454,8 @@ function setIdschedactasig($idschedactasig) {
     {
          $con = Conectar();
          $sql = "SELECT * FROM actividad_por_schedule_usu_dia($s->id)";
-         
+//         var_dump($sql);
+//           exit();
          $res = pg_query($con,$sql);
          $array=null;
          
@@ -473,7 +474,8 @@ function setIdschedactasig($idschedactasig) {
     {
          $con = Conectar();
          $sql = "SELECT * FROM actividad_por_schedule_usu_noche($s->id)";
-         
+//         var_dump($sql);
+//         exit();
          $res = pg_query($con,$sql);
          $array=null;
          
@@ -609,6 +611,22 @@ function setIdschedactasig($idschedactasig) {
         else{
             return null;
         }
+    }
+                function actualizar_inicio_tarea(Schedule $s){
+       
+        $con = Conectar();
+        $sql = "SELECT * FROM actividad_schedule_actualiza_inicio($s->idschedact,'$s->horain',$s->idusu)";
+//        var_dump($sql);
+//        exit();
+        pg_query($con,$sql);
+    }
+                    function actualizar_fin_tarea(Schedule $s){
+       
+        $con = Conectar();
+        $sql = "SELECT * FROM actividad_schedule_actualiza_fin($s->idschedact,'$s->horafin',$s->idusu)";
+        //var_dump($sql);
+        //exit();
+        pg_query($con,$sql);
     }
 
                 function finalizar_tarea(Schedule $s){
@@ -904,6 +922,53 @@ function setIdschedactasig($idschedactasig) {
             return null;
         }
     }
+    
+        function asignar_act_apoyo(Schedule $s){
+        
+        $con =  Conectar();
+        $sql = "SELECT * FROM actividad_schedule_asig_apoyo($s->id,$s->idusu)";
+     
+        $res = pg_query($con,$sql);
+//        $val = pg_fetch_result($res,0,0);
+        
+        }
+                function asignar_act_apoyo_otro(Schedule $s){
+        
+        $con =  Conectar();
+        $sql = "SELECT * FROM actividad_schedule_asig_apoyo_otro($s->id,$s->idusu)";
+     
+        $res = pg_query($con,$sql);
+//        $val = pg_fetch_result($res,0,0);
+        
+        }
+        
+         function rechazar_act(Schedule $s){
+        
+        $con =  Conectar();
+        $sql = "SELECT * FROM actividad_asig_rechazar($s->id,$s->idusu)";
+     
+        $res = pg_query($con,$sql);
+//        $val = pg_fetch_result($res,0,0);
+        
+        }
+        
+                        function desasignar_schedule(Schedule $s){
+        
+        $con =  Conectar();
+        $sql = "SELECT * FROM schedule_desasignar($s->id)";
+//        var_dump($sql);
+//        exit();
+        $res = pg_query($con,$sql);
+        $val = pg_fetch_result($res,0,0);
+        if($val=='0'){
+            $_SESSION['mensaje_schedule']="Error al desasignar Schedule al Operador"; 
+            return 0;
+        }
+        else{
+            $_SESSION['mensaje_schedule']="Los datos se registraron satisfactoriamente"; 
+            return $val;
+        }
+        }
     
         }
 

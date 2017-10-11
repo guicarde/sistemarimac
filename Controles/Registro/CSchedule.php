@@ -6,6 +6,7 @@ session_start();
 include_once '../../DAO/Conexion.php';
 include_once '../../DAO/Registro/Schedule.php';
 include_once '../../DAO/Registro/Turno.php';
+include_once '../../Classes/PHPExcel.php';
 
 
 $direccionInicio = "location:../../Vistas/index.php";
@@ -138,6 +139,22 @@ if (isset($_POST['hidden_schedule'])) {
         header("location: ../../Vistas/MisSchedules.php");    
        
     }
+                else if ($accion == 'desasignar_schedule')
+    {
+        unset($_SESSION['arreglo_cargado_schedule']);
+
+        $id_schedule = $_POST['id_schedule'];
+        $id_usuario = $_SESSION['id_username'];
+        
+            $ob_schedule = new Schedule();
+            $ob_schedule->setId($id_schedule);
+            $ob_schedule->setIdusu($id_usuario);
+            
+            $resul = $ob_schedule->desasignar_schedule($ob_schedule);
+
+        header("location: ../../Vistas/MisSchedules.php");    
+       
+    }
                            else if ($accion == 'tomar_tarea')
     {
           $id_schedule_act = $_POST['id_schedule_act'];
@@ -149,6 +166,68 @@ if (isset($_POST['hidden_schedule'])) {
                 
             
         header("location: ../../Vistas/TareasPendientes.php");    
+       
+    }
+                       else if ($accion == 'asignar_tarea')
+    {
+          $id_schedule_act = $_POST['id_schedule_act'];
+          $turno = $_SESSION['hora_turno'];
+//          var_dump($turno);
+//          exit();
+          $id_usuario = $_POST['c_usuario'];
+          $ob_asignar_task = new Schedule();
+          $ob_asignar_task->setId($id_schedule_act);
+          $ob_asignar_task->setIdusu($id_usuario);
+          $ob_asignar_task->asignar_act_apoyo($ob_asignar_task);
+          
+          $ob_actividades = new Schedule();
+          $ob_actividades->setId($_SESSION['id_schedule']);
+//          var_dump($ob_actividades);
+//          exit();
+          
+          if($turno=='19:00:00')
+        {
+        $arreglo = $ob_actividades->listar_por_schedule_usu($ob_actividades);
+        }else if ($turno=='23:00:00'){
+        $arreglo = $ob_actividades->listar_por_schedule_usu_noche($ob_actividades);    
+        }else{
+         $arreglo = $ob_actividades->listar_por_schedule_usu_dia($ob_actividades);    
+        }
+        
+          $_SESSION['arreglo_actividad_por_schedule'] = $arreglo;
+          $_SESSION['accion_schedule'] = 'detalle_schedule';
+          $_SESSION['id_schedule_act'] = $id_schedule_act;
+//          $ob_actividades = new Schedule();
+//          $ob_actividades->setId($_SESSION['id_schedule']);
+//          $arreglo = $ob_actividades->listar_por_schedule_usu($ob_actividades);
+//          $_SESSION['arreglo_actividad_por_schedule'] = $arreglo;
+//          $_SESSION['accion_schedule'] = 'detalle_schedule';  
+                
+            
+        header("location: ../../Vistas/DetalleScheduleOpe.php");    
+       
+    }
+                         else if ($accion == 'asignar_tarea_asignada')
+    {
+          $id_schedule_act_asig = $_POST['id_schedule_act_asig'];
+//          $turno = $_SESSION['hora_turno'];
+//          var_dump($turno);
+//          exit();
+          $id_usuario = $_POST['c_usuario'];
+          $ob_asignar_task = new Schedule();
+          $ob_asignar_task->setId($id_schedule_act_asig);
+          $ob_asignar_task->setIdusu($id_usuario);
+          $ob_asignar_task->asignar_act_apoyo_otro($ob_asignar_task);
+          
+        
+//          $ob_actividades = new Schedule();
+//          $ob_actividades->setId($_SESSION['id_schedule']);
+//          $arreglo = $ob_actividades->listar_por_schedule_usu($ob_actividades);
+//          $_SESSION['arreglo_actividad_por_schedule'] = $arreglo;
+//          $_SESSION['accion_schedule'] = 'detalle_schedule';  
+                
+            
+        header("location: ../../Vistas/DetalleTareasAsignadas.php");    
        
     }
                 else if($accion=='buscar_mis_schedules')
@@ -279,7 +358,9 @@ if (isset($_POST['hidden_schedule'])) {
           
           ?>
 
-           <div class="alert alert-warning"><?php echo $hora;?></div> 
+           <div class="alert alert-warning">
+           <input type="time" id="id_hora_inicio_final<?php echo $id_schedule_act;?>" value="<?php echo date('H:i:s', strtotime($hora)) ?>" onblur="actualiza_hora_inicio('<?php echo $id_schedule_act;?>')">          
+           </div> 
            <input type="hidden" id="id_marcado_hora_inicio<?php echo $id_schedule_act ?>" value="<?php echo $hora ?>">
            
           <?php
@@ -310,7 +391,9 @@ if (isset($_POST['hidden_schedule'])) {
           
           ?>
 
-           <div class="alert alert-success"><?php echo $hora;?></div> 
+           <div class="alert alert-success">
+               <input type="time" id="id_hora_fin_final<?php echo $id_schedule_act;?>" value="<?php echo date('H:i:s', strtotime($hora))?>" onblur="actualiza_hora_fin('<?php echo $id_schedule_act;?>')">
+           </div> 
            <input type="hidden" id="id_marcado_hora_fin<?php echo $id_schedule_act ?>" value="<?php echo $hora ?>">
            
           <?php    
@@ -506,6 +589,148 @@ if (isset($_POST['hidden_schedule'])) {
         header("location: ../../Vistas/DetalleTareasAsignadas.php");    
        
     }
+         else if ($accion == 'generar_excel_finalizado')
+    {
+        $id_schedule = $_POST['id_schedule'];
+        $turno =  $_POST['turno'];
+     
+        $ob = new Schedule();
+        $ob->setId($id_schedule);
+
+        if($turno=='19:00:00')
+        {
+        $arreglo = $ob->reporte_cierre_tarde_noche($ob);
+        }else if ($turno=='23:00:00'){
+        $arreglo = $ob->reporte_cierre_noche($ob);   
+        }else{
+        $arreglo = $ob->reporte_cierre_dia($ob); 
+        }
+//        var_dump($arreglo);
+//        exit();
+        $objXLS = new PHPExcel();
+        $objSheet = $objXLS->setActiveSheetIndex(0);
+        
+        $objSheet->setCellValue('A1', 'N°');
+        $objSheet->setCellValue('B1', 'PTE');
+        $objSheet->setCellValue('C1', 'DESCRIPCIÓN');
+        $objSheet->setCellValue('D1', 'HORA EJECUCIÓN');
+        $objSheet->setCellValue('E1', 'PROCEDIMIENTO');
+        $objSheet->setCellValue('F1', 'PERIODO');
+        $objSheet->setCellValue('G1', 'HORA INICIO');
+        $objSheet->setCellValue('H1', 'HORA FIN');
+        $objSheet->setCellValue('I1', 'DURACIÓN');
+        $objSheet->setCellValue('J1', 'COMENTARIO');
+        $objSheet->setCellValue('K1', 'OPERADOR');
+        
+        $num = 1;
+        foreach ($arreglo as $a) {
+        if ($a['actividad_pte'] == '1') {
+          $pte = 'ACSELX';
+          }
+        if ($a['actividad_pte'] == '2') {
+          $pte = 'AIX';
+          }   
+        if ($a['actividad_pte'] == '3') {
+          $pte = 'AS400';
+          }   
+        if ($a['actividad_pte'] == '4') {
+          $pte = 'DATA CENTER';
+          }   
+        if ($a['actividad_pte'] == '5') {
+          $pte = 'DATASTAGE';
+          }   
+        if ($a['actividad_pte'] == '6') {
+          $pte = 'LEGATO';
+          }   
+        if ($a['actividad_pte'] == '7') {
+          $pte = 'MOD, WEB';
+          }   
+        if ($a['actividad_pte'] == '8') {
+          $pte = 'NOTES';
+          }   
+        if ($a['actividad_pte'] == '9') {
+          $pte = 'RSALUD';
+          }   
+        if ($a['actividad_pte'] == '10') {
+          $pte = 'SISO';
+          }   
+        if ($a['actividad_pte'] == '11') {
+          $pte = 'SITEDS';
+          }   
+        if ($a['actividad_pte'] == '12') {
+          $pte = 'WINDOWS';
+          }   
+          
+            $num++;
+         $objSheet->setCellValue('A'.$num, $num-1);
+         $objSheet->setCellValue('B'.$num, $pte);
+         $objSheet->setCellValue('C'.$num, $a['actividad_descripcion']);
+//         $objSheet->setCellValue('D'.$num, date('H:i', strtotime($a['actividad_horaejecucion'])));
+         $objSheet->setCellValue('E'.$num, $a['procedimiento_nombre']);
+         $objSheet->setCellValue('F'.$num, $a['periodo_nombre']);
+//         $objSheet->setCellValue('G'.$num, date('H:i', strtotime($a['schedact_horaini'])));
+//         $objSheet->setCellValue('H'.$num, date('H:i', strtotime($a['schedact_horafin'])));
+//         $objSheet->setCellValue('I'.$num, date('H:i', strtotime($a['schedact_duracion'])));
+         $objSheet->setCellValue('J'.$num, $a['schedact_comentario']);
+         $objSheet->setCellValue('K'.$num, $a['usu_apellidos_usuario'].' '.$a['usu_nombres_usuario']);
+        }
+        $objXLS->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('E1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('F1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('G1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('H1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('I1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('J1')->getFont()->setBold(true);
+        $objXLS->getActiveSheet()->getStyle('K1')->getFont()->setBold(true);
+        //$objXLS->getActiveSheet()->getStyle('H3')->getFont()->setColor(PHPExcel_Style_Color::COLOR_RED);
+        $objXLS->getActiveSheet()->getStyle('A1:K1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('CCFFE5');
+        $objXLS->getActiveSheet()->getColumnDimension("A")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("B")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("C")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("D")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("E")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("F")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("G")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("H")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("I")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("J")->setAutoSize(true);
+        $objXLS->getActiveSheet()->getColumnDimension("K")->setAutoSize(true);
+        $objXLS->getActiveSheet()->setTitle('REPORTE_FIN_EXCEL');
+        $objXLS->setActiveSheetIndex(0);
+        $objWriter = PHPExcel_IOFactory::createWriter($objXLS,'Excel5');
+        header('Content-type: application/vnd.ms-excel');
+        // It will be called file.xls
+        header('Content-Disposition: attachment; filename="Reporte_Schedule_Finalizado.xls"');
+        $objWriter->save('php://output');
+       
+    }
+                   else if ($accion == 'actualiza_hora_inicio')
+    {
+          $id_schedule_act = $_POST['id_schedule_act'];
+          $id_usuario = $_SESSION['id_username'];
+          $hora_inicio =  $_POST['hora_inicio'];
+         
+          $ob_iniciar = new Schedule();
+          $ob_iniciar->setIdschedact($id_schedule_act);
+          $ob_iniciar->setIdusu($id_usuario);
+          $ob_iniciar->setHorain($hora_inicio);
+          $ob_iniciar->actualizar_inicio_tarea($ob_iniciar);
+          }
+                       else if ($accion == 'actualiza_hora_fin')
+    {
+          $id_schedule_act = $_POST['id_schedule_act'];
+          $id_usuario = $_SESSION['id_username'];
+          $hora_fin =  $_POST['hora_fin'];
+         
+          $ob_iniciar = new Schedule();
+          $ob_iniciar->setIdschedact($id_schedule_act);
+          $ob_iniciar->setIdusu($id_usuario);
+          $ob_iniciar->setHorafin($hora_fin);
+          $ob_iniciar->actualizar_fin_tarea($ob_iniciar);
+          }
     
 } else {
     header("location: ../../Vistas/MantenerSchedule.php");
